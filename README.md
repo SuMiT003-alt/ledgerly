@@ -72,3 +72,12 @@ Practice examples explicitly state when GST, inventory-cost postings, or a speci
 - `POST /api/practice/session`: JSON body `{"topic":"all","excludeIds":[]}`; returns a randomized session.
 
 Both endpoints also work under `/Ledgerly/api/…`. Use the included server for practice sessions; a generic static HTTP server cannot serve these API routes.
+
+## Public discovery pages
+
+- `gst-calculator.html`: search-friendly GST calculation guide covering CGST, SGST, IGST, inclusive prices and discounts.
+- `journal-entry-practice.html`: accounting journal-entry practice guide with debit-credit and ledger explanations.
+- `tally-practice.html`: Tally Prime voucher practice guide covering the fictional trading month, Day Book and statement labs.
+- `robots.txt` and `sitemap.xml`: public discovery files for the deployed Ledgerly origin. Update the sitemap if the production hostname changes.
+
+These pages are educational entry points into the main app. They do not replace current GST law, official portal guidance or advice from a qualified professional.

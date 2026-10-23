@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /Ledgerly/
+Disallow: /Ledgerly/api/
+
+Sitemap: https://ledgerly-6d88.onrender.com/Ledgerly/sitemap.xml
