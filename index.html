@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Ledgerly is a practical GST, accounting and compliance learning desk for Indian businesses and accountants." />
+  <title>Ledgerly — GST, made clearer</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <script>
+    (() => {
+      let theme;
+      const availableThemePresets = ['sage', 'violet', 'sunset', 'midnight'];
+      try { theme = localStorage.getItem('ledgerly-theme'); } catch {}
+      const savedPreset = theme === 'dark' ? 'midnight' : theme === 'light' ? 'sage' : theme;
+      document.documentElement.dataset.theme = availableThemePresets.includes(savedPreset)
+        ? savedPreset : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'midnight' : 'sage');
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="tally-lab.css" />
+  <link rel="stylesheet" href="statement-learning.css?v=1" />
+  <link rel="stylesheet" href="document-coach.css?v=manual-fallback-1" />
+  <link rel="stylesheet" href="gst-learning.css?v=1" />
+  <link rel="stylesheet" href="studio-theme.css?v=1" />
+  <link rel="stylesheet" href="learning-layout.css" />
+  <link rel="stylesheet" href="gst-suite.css?v=1" />
+  <link rel="stylesheet" href="work-suite.css?v=2" />
+  <link rel="stylesheet" href="theme-presets.css?v=2" />
+</head>
+<body>
+  <div class="app-shell">
+    <main class="main-content">
+      <div class="workspace-header" id="workspaceHeader">
+      <header class="topbar">
+        <a class="brand-lockup" href="#overview" aria-label="Ledgerly learning home"><div class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></div><div><span class="brand-name">ledgerly</span><span class="brand-tagline">one clear step at a time</span></div></a>
+         <div class="breadcrumb"><span>Your learning desk</span><b>/</b><strong id="currentModuleLabel">Start here</strong></div>
+         <div class="topbar-actions">
+           <div class="workspace-mode-switch" role="tablist" aria-label="Choose a workspace"><button id="learnModeButton" type="button" role="tab" aria-selected="true"><span>◒</span>Learn</button><button id="toolsModeButton" type="button" role="tab" aria-selected="false"><span>✦</span>Practice <small>GST</small></button><button id="workModeButton" type="button" role="tab" aria-selected="false"><span>▣</span>Work <small>NEW</small></button></div>
+           <button class="mobile-search-toggle" id="mobileSearchButton" type="button" aria-label="Search Ledgerly" aria-expanded="false" aria-controls="searchInput">⌕</button>
+           <label class="search-box" aria-label="Search Ledgerly">
+            <span>⌕</span>
+             <input id="searchInput" type="search" placeholder="Search lessons, invoices, GSTIN…" />
+            <kbd>⌘ K</kbd>
+          </label>
+          <div class="streak"><span class="streak-flame">✦</span><strong id="streakCount">1 day</strong><span>streak</span></div>
+            <details class="theme-picker" id="themePicker"><summary class="theme-toggle" id="themeToggle" aria-label="Choose a Ledgerly theme"><span class="theme-toggle-icon" id="themeIcon">✦</span><span id="themeLabel">Theme</span></summary><div class="theme-picker-menu" role="group" aria-label="Choose a Ledgerly theme"><span class="theme-picker-title">Choose your atmosphere</span><button type="button" class="theme-option" data-theme-choice="sage"><i class="theme-swatch sage-swatch"></i><span><b>Sage desk</b><small>Calm and clear</small></span><strong>✓</strong></button><button type="button" class="theme-option" data-theme-choice="violet"><i class="theme-swatch violet-swatch"></i><span><b>Violet studio</b><small>Creative focus</small></span><strong>✓</strong></button><button type="button" class="theme-option" data-theme-choice="sunset"><i class="theme-swatch sunset-swatch"></i><span><b>Sunset ledger</b><small>Warm and energetic</small></span><strong>✓</strong></button><button type="button" class="theme-option" data-theme-choice="midnight"><i class="theme-swatch midnight-swatch"></i><span><b>Midnight neon</b><small>Deep-work mode</small></span><strong>✓</strong></button></div></details>
+            <details class="mode-picker" id="modePicker"><summary class="mode-toggle" id="modeToggle" aria-label="Choose light or dark mode"><span id="modeIcon">☼</span><span id="modeLabel">Light</span></summary><div class="mode-picker-menu" role="group" aria-label="Choose light or dark mode"><button type="button" class="mode-option" data-theme-mode="light"><span>☼</span><b>Light mode</b><strong>✓</strong></button><button type="button" class="mode-option" data-theme-mode="dark"><span>◒</span><b>Dark mode</b><strong>✓</strong></button></div></details>
+           <details class="desk-tools" id="deskTools"><summary aria-label="Desk tools">Tools <span aria-hidden="true">⌄</span></summary><div class="desk-tools-menu"><button id="printCardBtn" type="button"><span>↗</span>Print pocket guide</button><button id="focusBtn" type="button" aria-pressed="false"><span>⌁</span>Focus mode</button><a href="#learning-dashboard"><span>◈</span>My learning dashboard</a></div></details>
+          <button class="outline-button focus-exit" id="focusExit" type="button">Exit focus <span>×</span></button>
+        </div>
+      </header>
+      <nav class="learning-tabs" id="learningTabs" aria-label="Learning modules">
+           <div class="learning-tabs-inner" role="tablist" aria-label="Choose a learning screen">
+           <a class="learning-tab active" id="top-overview" role="tab" href="#overview" data-section="overview" aria-selected="true" aria-controls="screen-overview"><span class="tab-step">⌂</span><span class="tab-label">Start here</span><small>Your roadmap</small></a>
+            <a class="learning-tab" id="top-rules" role="tab" href="#rules" data-section="rules" aria-selected="false" aria-controls="screen-rules" tabindex="-1"><span class="tab-step">01</span><span class="tab-label">Golden rules</span><small>Understand Dr / Cr</small></a>
+           <a class="learning-tab" id="top-journal" role="tab" href="#journal" data-section="journal" aria-selected="false" aria-controls="screen-journal" tabindex="-1"><span class="tab-step">02</span><span class="tab-label">Journal entries</span><small>Build an entry</small></a>
+           <a class="learning-tab" id="top-ledgers" role="tab" href="#ledgers" data-section="ledgers" aria-selected="false" aria-controls="screen-ledgers" tabindex="-1"><span class="tab-step">03</span><span class="tab-label">Ledgers</span><small>Follow the balance</small></a>
+           <a class="learning-tab" id="top-trial-balance" role="tab" href="#trial-balance" data-section="trial-balance" aria-selected="false" aria-controls="screen-trial-balance" tabindex="-1"><span class="tab-step">04</span><span class="tab-label">Trial balance</span><small>Check Dr = Cr</small></a>
+           <a class="learning-tab" id="top-profit-loss" role="tab" href="#profit-loss" data-section="profit-loss" aria-selected="false" aria-controls="screen-profit-loss" tabindex="-1"><span class="tab-step">05</span><span class="tab-label">Profit &amp; Loss</span><small>Find the result</small></a>
+           <a class="learning-tab" id="top-balance-sheet" role="tab" href="#balance-sheet" data-section="balance-sheet" aria-selected="false" aria-controls="screen-balance-sheet" tabindex="-1"><span class="tab-step">06</span><span class="tab-label">Balance sheet</span><small>See the big picture</small></a>
+           <a class="learning-tab" id="top-tally" role="tab" href="#tally" data-section="tally" aria-selected="false" aria-controls="screen-tally" tabindex="-1"><span class="tab-step">07</span><span class="tab-label">Tally Prime</span><small>Post the vouchers</small></a>
+           <a class="learning-tab gst-tab" id="top-gst-learning" role="tab" href="#gst-learning" data-section="gst-learning" aria-selected="false" aria-controls="screen-gst-learning" tabindex="-1"><span class="tab-step">08</span><span class="tab-label">GST essentials</span><small>Run the full cycle</small></a>
+           <a class="learning-tab" id="top-practice" role="tab" href="#practice" data-section="practice" aria-selected="false" aria-controls="screen-practice" tabindex="-1"><span class="tab-step">09</span><span class="tab-label">Practice</span><small>10 random questions</small></a>
+        </div>
+        <span class="tab-track-hint">Swipe to explore all topics <span aria-hidden="true">→</span></span>
+      </nav>
+      </div>
+
+      <div class="page-wrap">
+        <div class="module-orientation" id="moduleOrientation" hidden><div><span class="section-kicker" id="moduleStep"></span><p id="modulePurpose"></p></div><a href="#overview" class="back-to-roadmap">View roadmap <span>↗</span></a></div>
+        <div class="learning-screen" id="screen-overview" data-screen="overview" role="tabpanel" aria-labelledby="top-overview">
+        <section class="hero-section" id="overview">
+          <div class="hero-copy">
+            <div class="eyebrow"><span class="eyebrow-dot"></span> Your daily accounting refresher</div>
+            <h1>Make every entry<br /><em>feel obvious.</em></h1>
+            <p class="hero-subtitle">A practical little desk for remembering what to debit, what to credit, and why it works.</p>
+            <div class="hero-actions">
+              <a class="button button-primary" href="#rules" id="continueLearning">Start with the golden rules <span>↗</span></a>
+              <a class="text-button" href="#practice">Test yourself <span>→</span></a>
+            </div>
+            <div class="hero-footnote"><span class="mini-avatars" aria-hidden="true"><i>R</i><i>M</i><i>P</i></span><span>Learn at your pace · Your progress stays on this device</span></div>
+          </div>
+          <div class="hero-visual" aria-label="An illustrated debit and credit balance">
+            <div class="visual-orbit orbit-one"></div>
+            <div class="visual-orbit orbit-two"></div>
+            <div class="visual-note note-top"><span class="note-dot teal"></span> Keep it balanced</div>
+            <div class="balance-illustration">
+              <div class="balance-title"><span>THE DAILY BALANCE</span><span class="live-dot">● LIVE</span></div>
+              <div class="balance-scale">
+                <div class="scale-pivot"></div>
+                <div class="scale-beam"></div>
+                <div class="scale-pan pan-left"><span>DEBIT</span><strong>₹ 24,500</strong></div>
+                <div class="scale-pan pan-right"><span>CREDIT</span><strong>₹ 24,500</strong></div>
+              </div>
+              <div class="balance-equation"><span>Dr</span><b>Total debits</b><i>=</i><span>Cr</span><b>Total credits</b></div>
+            </div>
+            <div class="visual-note note-bottom"><span class="note-dot orange"></span> No guesswork required</div>
+          </div>
+        </section>
+
+        <section class="welcome-strip" aria-label="Today's lesson">
+          <div class="welcome-icon">✦</div>
+          <div class="welcome-copy"><span class="section-kicker">TODAY'S 5-MINUTE RESET</span><strong>When cash comes in, cash account gets the debit.</strong><span>Use the rule first. The entry follows.</span></div>
+          <a href="#journal" class="strip-link">See an example <span>→</span></a>
+        </section>
+
+        <section class="route-map" id="learningPath" aria-labelledby="routeMapTitle">
+           <div class="route-map-heading"><div><span class="section-kicker">YOUR LEARNING ROUTE</span><h2 id="routeMapTitle">A little clarity.<br /><em>One step at a time.</em></h2></div><div class="route-progress"><strong id="routeProgress">0 / 11</strong><span id="routeProgressHint">Start with the rules</span></div></div>
+            <div class="route-steps">
+              <a class="route-card current" href="#rules" data-route-section="rules"><span class="route-number">01</span><span class="route-icon">◈</span><strong>Golden rules</strong><small>Why debit? Why credit?</small><span class="route-card-status">Start here</span><i>→</i></a>
+             <a class="route-card" href="#journal" data-route-section="journal"><span class="route-number">02</span><span class="route-icon">✎</span><strong>Journal entries</strong><small>Turn a story into an entry</small><span class="route-card-status">Explore</span><i>→</i></a>
+             <a class="route-card" href="#ledgers" data-route-section="ledgers"><span class="route-number">03</span><span class="route-icon">▤</span><strong>Ledgers</strong><small>Follow each account’s balance</small><span class="route-card-status">Explore</span><i>→</i></a>
+             <a class="route-card" href="#trial-balance" data-route-section="trial-balance"><span class="route-number">04</span><span class="route-icon">＝</span><strong>Trial balance</strong><small>Check every ledger total</small><span class="route-card-status">Explore</span><i>→</i></a>
+             <a class="route-card" href="#profit-loss" data-route-section="profit-loss"><span class="route-number">05</span><span class="route-icon">↗</span><strong>Profit &amp; Loss</strong><small>Turn income and expenses into a result</small><span class="route-card-status">Explore</span><i>→</i></a>
+             <a class="route-card" href="#balance-sheet" data-route-section="balance-sheet"><span class="route-number">06</span><span class="route-icon">◫</span><strong>Balance sheet</strong><small>Understand where it all lands</small><span class="route-card-status">Explore</span><i>→</i></a>
+             <a class="route-card" href="#tally" data-route-section="tally"><span class="route-number">07</span><span class="route-icon">T</span><strong>Tally Prime</strong><small>Post a real-world business case</small><span class="route-card-status">Explore</span><i>→</i></a>
+             <a class="route-card" href="#gst-learning" data-route-section="gst-learning"><span class="route-number">08</span><span class="route-icon">₹</span><strong>GST essentials</strong><small>Registration to filing, one clear cycle</small><span class="route-card-status">Explore</span><i>→</i></a>
+             <a class="route-card" href="#practice" data-route-section="practice"><span class="route-number">09</span><span class="route-icon">✓</span><strong>Practice</strong><small>A fresh set of 10 questions</small><span class="route-card-status">Explore</span><i>→</i></a>
+          </div>
+          <p class="route-note"><span>✦</span> Follow the numbered path, or jump straight to what you need. Each tab is a focused learning screen.</p>
+            <div class="progress-card"><div class="progress-card-top"><span>Your learning milestones</span><strong id="progressText" aria-live="polite">0 / 11</strong></div><div class="progress-track"><span id="progressBar"></span></div><p id="progressHint">Explore the three golden rules.</p><details class="progress-details"><summary>See the 11 milestones</summary><ul id="progressMilestones"></ul></details></div>
+          </section>
+
+          <section class="learning-dashboard" id="learning-dashboard" aria-labelledby="learningDashboardTitle">
+            <div class="learning-dashboard-heading"><div><span class="section-kicker">YOUR LEARNING DASHBOARD</span><h2 id="learningDashboardTitle">See what is sticking.<br /><em>Choose the next useful step.</em></h2></div><a class="outline-button" href="#practice">Open practice <span>→</span></a></div>
+            <div class="dashboard-recommendation" id="dashboardRecommendation"></div>
+            <div class="learning-stat-grid" aria-label="Learning statistics">
+              <article class="learning-stat-card stat-progress"><span>ROUTE PROGRESS</span><strong id="dashboardProgress">0%</strong><small id="dashboardProgressDetail">0 of 11 milestones complete</small><div class="learning-stat-bar"><i id="dashboardProgressBar"></i></div></article>
+              <article class="learning-stat-card"><span>PRACTICE SESSIONS</span><strong id="dashboardSessions">0</strong><small id="dashboardSessionDetail">No sessions yet</small></article>
+              <article class="learning-stat-card stat-warm"><span>PERSONAL BEST</span><strong id="dashboardBest">—</strong><small>out of 10 questions</small></article>
+              <article class="learning-stat-card stat-lilac"><span>LEARNING STREAK</span><strong id="dashboardStreak">1 day</strong><small>Keep the habit visible</small></article>
+            </div>
+            <div class="learning-dashboard-grid">
+              <article class="dashboard-panel"><div class="dashboard-panel-heading"><div><span class="section-kicker">TOPIC PULSE</span><h3>Where your confidence is growing</h3></div><span id="dashboardTopicSummary">Complete a session to see this</span></div><div class="dashboard-topic-list" id="dashboardTopicList"><div class="dashboard-empty">Your topic scores will appear after your first practice session.</div></div></article>
+              <article class="dashboard-panel mistake-notebook"><div class="dashboard-panel-heading"><div><span class="section-kicker">MISTAKE NOTEBOOK</span><h3>Small misses, useful reviews</h3></div><span id="dashboardMistakeCount">0 saved</span></div><div id="dashboardMistakes"><div class="dashboard-empty">Finish a practice session and your missed questions will be saved here.</div></div><a class="dashboard-review-link" href="#mistakeNotebook">Retry saved mistakes <span>↗</span></a></article>
+            </div>
+          </section>
+          </div>
+
+         <div class="learning-screen" id="screen-gst-learning" data-screen="gst-learning" role="tabpanel" aria-labelledby="top-gst-learning" hidden>
+         <section class="content-section gst-roadmap-section" id="gst-learning">
+           <div class="gst-roadmap-hero">
+             <div class="gst-roadmap-copy"><span class="section-kicker">GST LEARNING ROUTE / INDIA</span><h1>From first question<br /><em>to filed return.</em></h1><p>Learn the GST lifecycle in the order a business actually experiences it: decide, register, invoice, reconcile, prepare, pay, file and keep the evidence.</p><div class="gst-roadmap-actions"><button class="button button-primary" type="button" data-open-gst-tool="calculator">Try the GST calculator <span>→</span></button><a class="gst-text-link" href="https://www.gst.gov.in/" target="_blank" rel="noopener noreferrer">Open official GST portal ↗</a></div></div>
+             <div class="gst-roadmap-status"><span class="gst-status-orb">GST</span><div><span class="section-kicker">YOUR LEARNING DESK</span><strong>One connected workflow</strong><p>Every step links back to the transaction, tax ledger and compliance record.</p></div><div class="gst-status-line"><span class="gst-live-dot"></span> 6 core stages · practice ready</div></div>
+           </div>
+           <div class="gst-legal-banner"><span class="gst-legal-icon">i</span><p><strong>Important:</strong> Ledgerly is software and an educational/compliance-assistance tool. It is not the Government GST Portal. Laws, rates, forms, due dates and procedures may change—verify with official sources or a qualified tax professional.</p></div>
+           <div class="gst-learning-heading"><div><span class="section-kicker">THE OPERATING CYCLE</span><h2>Learn the next step<br /><em>before it becomes urgent.</em></h2></div><p>Use the cards as a guided course, or jump to the exact moment you are working on today.</p></div>
+           <div class="gst-learning-path">
+             <article class="gst-path-card path-teal"><span class="gst-path-number">01</span><span class="gst-path-icon">◎</span><div><strong>Decide &amp; register</strong><p>Understand turnover, interstate supply, e-commerce and composition triggers. Prepare REG-01 documents.</p><button type="button" data-open-gst-tool="registration">Explore eligibility <span>→</span></button></div></article>
+             <article class="gst-path-card path-gold"><span class="gst-path-number">02</span><span class="gst-path-icon">⌁</span><div><strong>Invoice correctly</strong><p>Place of supply decides CGST + SGST or IGST. Build a clean invoice with HSN/SAC and evidence.</p><button type="button" data-open-gst-tool="invoice">Practise an invoice <span>→</span></button></div></article>
+             <article class="gst-path-card path-coral"><span class="gst-path-number">03</span><span class="gst-path-icon">↔</span><div><strong>Capture &amp; reconcile</strong><p>Bring sales, purchases and GSTR-2B together. Match GSTIN, invoice number, date and tax.</p><button type="button" data-open-gst-tool="reconciliation">Open reconciliation <span>→</span></button></div></article>
+             <article class="gst-path-card path-lilac"><span class="gst-path-number">04</span><span class="gst-path-icon">▤</span><div><strong>Prepare returns</strong><p>Turn reviewed registers into GSTR-1, GSTR-3B and annual return working papers.</p><button type="button" data-open-gst-tool="returns">Prepare a return <span>→</span></button></div></article>
+             <article class="gst-path-card path-ink"><span class="gst-path-number">05</span><span class="gst-path-icon">₹</span><div><strong>Pay &amp; file</strong><p>Review cash and credit ledgers, create a challan, then complete the final filing on the official portal.</p><button type="button" data-open-gst-tool="compliance">See filing checklist <span>→</span></button></div></article>
+             <article class="gst-path-card path-blue"><span class="gst-path-number">06</span><span class="gst-path-icon">✓</span><div><strong>Keep the trail</strong><p>Record ARN, challan, notices, refunds, amendments and documents for the full retention period.</p><button type="button" data-open-gst-tool="compliance">View compliance desk <span>→</span></button></div></article>
+           </div>
+           <div class="gst-next-action" id="gstNextAction"><div class="gst-next-icon">✦</div><div><span class="section-kicker">GUIDED ASSISTANT / WHAT DO I DO NEXT?</span><h3 id="gstNextTitle">Choose the moment you are in.</h3><p id="gstNextText">Ledgerly will show the preparation steps and the point where you continue on the official GST portal.</p></div><label><span class="field-label">I want to…</span><select id="gstNextSelect"><option value="register">check if I need GST registration</option><option value="invoice">create a GST invoice</option><option value="gstr3b">prepare my GSTR-3B</option><option value="reconcile">reconcile GSTR-2B</option><option value="notice">respond to a notice</option></select></label><ol id="gstNextSteps"></ol></div>
+           <div class="gst-knowledge-grid"><article><span class="section-kicker">QUICK GLOSSARY</span><h3>Five words you will use every month.</h3><div class="gst-glossary" id="gstGlossary"><button type="button" data-glossary="gstin"><b>GSTIN</b><span>your 15-character registration identity</span></button><button type="button" data-glossary="itc"><b>ITC</b><span>eligible input tax credit on purchases</span></button><button type="button" data-glossary="arn"><b>ARN</b><span>application reference after portal submission</span></button><button type="button" data-glossary="rcm"><b>RCM</b><span>recipient pays tax in specified cases</span></button><button type="button" data-glossary="2b"><b>GSTR-2B</b><span>static ITC statement used for matching</span></button></div><p class="gst-glossary-note" id="gstGlossaryNote">Select a term to see the plain-English explanation.</p></article><article class="gst-source-card"><span class="section-kicker">OFFICIAL SOURCES</span><h3>Know where the government step begins.</h3><p>Use Ledgerly for calculations, working papers, reminders and learning. Portal login, OTP, challan payment and return submission happen on the official system or an authorised integration.</p><a href="https://www.gst.gov.in/" target="_blank" rel="noopener noreferrer">GST Portal <span>↗</span></a><a href="https://tutorial.gst.gov.in/" target="_blank" rel="noopener noreferrer">GST Tutorials <span>↗</span></a><small>Links open in a new tab · always verify current instructions.</small></article></div>
+           <div class="gst-reference-rail"><div><span class="section-kicker">THE REST OF THE GST DESK</span><h3>Keep the edge cases visible.</h3></div><div class="gst-reference-items"><article><b>⌁</b><strong>E-invoice &amp; E-way bill</strong><span>Applicability, IRN, QR, Part A/B and vehicle updates</span></article><article><b>↻</b><strong>RCM &amp; Composition</strong><span>Identify liability, restrictions and ITC treatment</span></article><article><b>₹</b><strong>Refunds &amp; cancellation</strong><span>Eligibility, documents, ARN, revocation and closure</span></article><article><b>!</b><strong>Notices &amp; amendments</strong><span>Assign owner, track due date and preserve response trail</span></article></div></div>
+         </section>
+         </div>
+
+         <div class="learning-screen" id="screen-rules" data-screen="rules" role="tabpanel" aria-labelledby="top-rules" hidden>
+        <section class="content-section" id="rules">
+          <div class="section-heading">
+            <div><span class="section-kicker">01 / THE FOUNDATION</span><h2>Golden rules, <em>without the fog.</em></h2></div>
+            <p>Classify the account first. Once you know what it is, the debit and credit side becomes a simple habit.</p>
+          </div>
+          <div class="rules-layout">
+            <div class="rule-tabs" role="tablist" aria-label="Account types">
+              <button class="rule-tab active" id="tab-personal" type="button" role="tab" data-rule="personal" aria-selected="true" aria-controls="ruleDetail"><span class="rule-tab-number">01</span><span><strong>Personal account</strong><small>People &amp; organisations</small></span><span class="tab-arrow">↗</span></button>
+              <button class="rule-tab" id="tab-real" type="button" role="tab" data-rule="real" aria-selected="false" aria-controls="ruleDetail" tabindex="-1"><span class="rule-tab-number">02</span><span><strong>Real account</strong><small>Things you own</small></span><span class="tab-arrow">↗</span></button>
+              <button class="rule-tab" id="tab-nominal" type="button" role="tab" data-rule="nominal" aria-selected="false" aria-controls="ruleDetail" tabindex="-1"><span class="rule-tab-number">03</span><span><strong>Nominal account</strong><small>Income &amp; expenses</small></span><span class="tab-arrow">↗</span></button>
+            </div>
+            <div class="rule-detail" id="ruleDetail" role="tabpanel" aria-labelledby="tab-personal">
+              <div class="rule-detail-top"><span class="rule-pill" id="rulePill">PERSONAL ACCOUNT</span><span class="rule-count" id="ruleCount">01 / 03</span></div>
+              <div class="rule-detail-main"><div class="rule-emblem" id="ruleEmblem">P</div><div><h3 id="ruleTitle">Debit the receiver.<br /><em>Credit the giver.</em></h3><p id="ruleDescription">If a person or organisation receives value, debit them. If they give value, credit them.</p></div></div>
+              <div class="rule-example" id="ruleExample"><div><span class="example-label">TRY THIS</span><strong>Paid Riya ₹5,000 against her outstanding balance</strong></div><div class="example-answer"><span>Riya A/c</span><b>Dr</b></div></div>
+              <button class="tiny-link" id="ruleNext" type="button">Next rule <span>→</span></button>
+            </div>
+          </div>
+          <div class="rule-reminders">
+            <div class="reminder-card teal-card"><span class="reminder-icon">↘</span><span class="section-kicker">PERSONAL</span><strong>Receiver / giver</strong><p>Think of the person behind the account.</p></div>
+            <div class="reminder-card yellow-card"><span class="reminder-icon">□</span><span class="section-kicker">REAL</span><strong>Comes in / goes out</strong><p>Think of the asset moving.</p></div>
+            <div class="reminder-card lilac-card"><span class="reminder-icon">≈</span><span class="section-kicker">NOMINAL</span><strong>Expenses / income</strong><p>Think of the result for the business.</p></div>
+          </div>
+        </section>
+
+        <section class="content-section reference-section" id="reference">
+          <div class="section-heading compact-heading"><div><span class="section-kicker">QUICK REFERENCE</span><h2>The three questions to ask.</h2></div><button class="outline-button" id="printReferenceBtn" type="button">Print this page <span>↗</span></button></div>
+           <div class="questions-grid">
+             <div class="question-card"><div class="question-number">01</div><span class="question-icon">?</span><h3>What kind of account is it?</h3><p>Person, thing, or income/expense?</p><span class="question-line"></span></div>
+             <div class="question-card highlighted"><div class="question-number">02</div><span class="question-icon">↔</span><h3>What is moving?</h3><p>Value coming in, going out, received, or given?</p><span class="question-line"></span></div>
+             <div class="question-card"><div class="question-number">03</div><span class="question-icon">✓</span><h3>Did both sides balance?</h3><p>Every debit needs an equal credit.</p><span class="question-line"></span></div>
+           </div>
+          <div class="mini-lab" id="miniLab">
+            <div class="mini-lab-copy"><span class="section-kicker">TRY IT YOURSELF</span><h3>Which side does it go on?</h3><p id="labPrompt">Cash is received from a customer. Where does Cash A/c go?</p><div class="lab-progress"><span id="labProgressText">1 / 4</span><div><i id="labProgressBar"></i></div></div></div>
+            <div class="mini-lab-play"><div class="lab-options" id="labOptions"></div><div class="lab-feedback" id="labFeedback" aria-live="polite"></div><button class="tiny-link lab-next" id="labNext" type="button" disabled>Check answer <span>→</span></button></div>
+          </div>
+        </section>
+
+        </div>
+        <div class="learning-screen" id="screen-journal" data-screen="journal" role="tabpanel" aria-labelledby="top-journal" hidden>
+        <section class="content-section journal-section" id="journal">
+          <div class="section-heading">
+            <div><span class="section-kicker">02 / FROM RULE TO ENTRY</span><h2>See the journal<br /><em>come together.</em></h2></div>
+            <p>Pick a familiar transaction, follow the logic, then build the entry yourself. These simple examples exclude GST and inventory postings.</p>
+          </div>
+          <div class="journal-workspace">
+            <div class="transaction-picker">
+              <label for="transactionSelect" class="field-label">Choose a transaction</label>
+              <select id="transactionSelect">
+                <option value="capital">Started business with cash ₹50,000</option>
+                <option value="rent">Paid office rent in cash ₹8,000</option>
+                <option value="sales">Sold goods for cash ₹12,000</option>
+                <option value="creditPurchase">Bought goods from Karan on credit ₹15,000</option>
+                <option value="drawings">Withdrew cash for personal use ₹3,000</option>
+              </select>
+              <div class="picker-hint"><span>✦</span> Read the story before looking at the entry.</div>
+              <div class="logic-summary"><span class="section-kicker">THE LOGIC</span><p id="logicSummary">Cash comes into the business, so Cash A/c is debited. Capital is the source, so it is credited.</p></div>
+            </div>
+            <div class="journal-card">
+              <div class="journal-card-header"><div><span class="section-kicker">JOURNAL ENTRY</span><strong id="journalEntryTitle">Capital introduced in cash</strong></div><span class="entry-date">01 Apr 2024</span></div>
+              <div class="journal-table-wrap">
+                <table class="journal-table"><thead><tr><th>Particulars</th><th>Ref.</th><th>Debit (₹)</th><th>Credit (₹)</th></tr></thead><tbody id="journalBody"></tbody></table>
+              </div>
+              <div class="journal-card-footer"><span><i class="status-dot"></i> Balanced entry</span><span id="entryType">Cash transaction · 2 accounts</span></div>
+            </div>
+          </div>
+          <form class="entry-builder" id="entryBuilder">
+            <div class="builder-heading"><div><span class="section-kicker">YOUR TURN / BUILD THE SAME ENTRY</span><h3>Pick the accounts. Balance the books.</h3></div><span class="builder-status" id="builderStatus">Awaiting your entry</span></div>
+            <div class="builder-fields"><label><span class="field-label">Debit account</span><select id="builderDebit" required aria-label="Debit account"></select></label><label><span class="field-label">Debit amount (₹)</span><input id="builderDebitAmount" type="number" min="0.01" step="0.01" max="1000000000" required placeholder="0.00" /></label><label><span class="field-label">Credit account</span><select id="builderCredit" required aria-label="Credit account"></select></label><label><span class="field-label">Credit amount (₹)</span><input id="builderCreditAmount" type="number" min="0.01" step="0.01" max="1000000000" required placeholder="0.00" /></label></div>
+            <div class="builder-footer"><p id="builderFeedback" aria-live="polite">Use the transaction above. Matching totals are only half the story — the accounts matter too.</p><button class="button button-primary" type="submit">Check my entry <span>✓</span></button></div>
+          </form>
+           <div class="tally-tip"><div class="tip-icon">T</div><div><span class="section-kicker">TALLY PRIME CUE</span><strong id="tallyVoucher">Receipt voucher · F6</strong><p id="tallyVoucherDescription">Cash introduced by the owner is a receipt. Debit Cash and credit Capital.</p></div><span class="tip-arrow" aria-hidden="true">↗</span></div>
+            <section class="gst-learning" id="gst-decision-desk" aria-labelledby="gstLearningTitle">
+             <div class="gst-learning-heading"><div><span class="section-kicker">GST / THE TAX DECISION</span><h3 id="gstLearningTitle">Same state or different state?<br /><em>That decides the tax ledger.</em></h3></div><p>Use the place of supply, not just the word “GST”. Try a scenario to see exactly when Tally needs CGST, SGST or IGST.</p></div>
+             <div class="gst-learning-grid">
+               <article class="gst-scenario-card">
+                 <div class="gst-card-kicker"><span>01</span><strong>Choose the scenario</strong></div>
+                 <div class="gst-scenario-tabs" role="tablist" aria-label="GST scenarios"><button type="button" data-gst-scenario="intra" aria-selected="true">Same state <small>Intra-state</small></button><button type="button" data-gst-scenario="inter" aria-selected="false">Different state <small>Inter-state</small></button><button type="button" data-gst-scenario="none" aria-selected="false">Exempt / nil-rated <small>No GST</small></button></div>
+                 <div class="gst-learning-inputs"><label><span class="field-label">Supply type</span><select id="gstLearningKind"><option value="sale">Sale / output GST</option><option value="purchase">Purchase / input GST</option></select></label><label><span class="field-label">Taxable value (₹)</span><input id="gstLearningAmount" type="number" min="0" step="0.01" value="10000" /></label><label><span class="field-label">GST rate (%)</span><input id="gstLearningRate" type="number" min="0" max="100" step="0.01" value="18" /></label></div>
+                 <div class="gst-learning-callout" id="gstLearningCallout"><strong>Same state = split the tax.</strong><p>Use CGST for the Centre and SGST for the State. At 18%, each side is 9%.</p></div>
+               </article>
+               <article class="gst-learning-entry">
+                 <div class="gst-card-kicker"><span>02</span><strong id="gstLearningResultLabel">Tally entry preview</strong><span class="gst-learning-tax-pill" id="gstLearningTaxPill">CGST + SGST</span></div>
+                 <div class="gst-learning-lines" id="gstLearningLines"></div>
+                 <div class="gst-learning-total"><span>Invoice / bill total</span><strong id="gstLearningTotal">₹11,800</strong></div>
+                 <div class="gst-learning-why"><span>WHY?</span><p id="gstLearningWhy">CGST and SGST are used because the supply stays within one state.</p></div>
+               </article>
+             </div>
+             <div class="gst-rule-cards"><div><span class="gst-rule-symbol">↔</span><strong>Intra-state</strong><p>Same state → <b>CGST + SGST</b>. Never add IGST to the same supply.</p></div><div><span class="gst-rule-symbol">→</span><strong>Inter-state</strong><p>Different state → <b>IGST</b>. Do not split it into CGST and SGST.</p></div><div><span class="gst-rule-symbol">Ø</span><strong>Exempt / nil-rated</strong><p>No GST ledger is posted. Record the sale or purchase at its actual value.</p></div></div>
+           </section>
+         </section>
+
+        </div>
+        <div class="learning-screen" id="screen-ledgers" data-screen="ledgers" role="tabpanel" aria-labelledby="top-ledgers" hidden>
+        <section class="content-section ledger-section" id="ledgers">
+          <div class="section-heading">
+            <div><span class="section-kicker">03 / FOLLOW THE FLOW</span><h2>A ledger is just<br /><em>the account's story.</em></h2></div>
+            <p>Journal records the event. Ledger groups it by account so you can see the running balance at a glance.</p>
+          </div>
+          <div class="ledger-workspace">
+            <div class="account-list"><div class="account-list-head"><span class="section-kicker">ACCOUNTS</span><span class="account-count">3 active</span></div><button class="account-item active" type="button" data-account="cash" aria-pressed="true"><span class="account-symbol cash-symbol">₹</span><span><strong>Cash A/c</strong><small>Current asset</small></span><b>₹ 39,000</b></button><button class="account-item" type="button" data-account="capital" aria-pressed="false"><span class="account-symbol capital-symbol">⌁</span><span><strong>Capital A/c</strong><small>Owner's equity</small></span><b>₹ 50,000</b></button><button class="account-item" type="button" data-account="rent" aria-pressed="false"><span class="account-symbol rent-symbol">⌂</span><span><strong>Rent A/c</strong><small>Expense</small></span><b>₹ 8,000</b></button><div class="account-tip"><span>⌁</span><p>Tip: A separate ledger makes patterns in an account easy to spot.</p></div></div>
+            <div class="ledger-card"><div class="ledger-card-header"><div><span class="section-kicker">RUNNING LEDGER</span><h3 id="ledgerTitle">Cash A/c</h3></div><div class="ledger-balance"><span>Closing balance</span><strong id="ledgerBalance">₹ 39,000 Dr</strong></div></div><div class="ledger-table-wrap"><table class="ledger-table"><thead><tr><th>Date</th><th>Particulars</th><th>Vch. type</th><th>Debit (₹)</th><th>Credit (₹)</th><th>Balance</th></tr></thead><tbody id="ledgerBody"></tbody></table></div><div class="ledger-card-footer"><span><i class="status-dot"></i> Up to date</span><span id="ledgerFooterText">3 transactions · asset account</span></div></div>
+          </div>
+        </section>
+
+        </div>
+        <div class="learning-screen" id="screen-tally" data-screen="tally" role="tabpanel" aria-labelledby="top-tally" hidden>
+        <section class="content-section tally-section" id="tally">
+           <div class="section-heading"><div><span class="section-kicker">07 / PUT THE RULES TO WORK</span><h2>From a journal entry<br /><em>to a Tally voucher.</em></h2></div><p>Practise a complete trading month: invoices, returns, collections, payments, and closing adjustments. Every entry tells you what to do in Tally Prime.</p></div>
+           <div class="lab-section-tabs" id="tallySectionTabs" role="tablist" aria-label="Tally learning views"><button id="tally-tab-guide" type="button" role="tab" data-tally-tab="guide" aria-selected="true" aria-controls="tallyGuidePanel">Voucher guide</button><button id="tally-tab-entry" type="button" role="tab" data-tally-tab="entry" aria-selected="false" aria-controls="tallyEntryPanel" tabindex="-1">Enter a real-world case <span>20</span></button><button id="tally-tab-coach" type="button" role="tab" data-tally-tab="coach" aria-selected="false" aria-controls="tallyCoachPanel" tabindex="-1">Document coach <span>NEW</span></button><button id="tally-tab-shortcuts" type="button" role="tab" data-tally-tab="shortcuts" aria-selected="false" aria-controls="tallyShortcutsPanel" tabindex="-1">Shortcut desk</button></div>
+
+          <div class="tally-panel" id="tallyGuidePanel" role="tabpanel" aria-labelledby="tally-tab-guide">
+            <div class="voucher-guide-grid" id="voucherGuideTabs" role="group" aria-label="Choose a voucher type"></div>
+            <div class="voucher-guide-detail" id="voucherGuideDetail" aria-live="polite"><div class="guide-title-row"><div><span class="section-kicker">WHEN THIS HAPPENS</span><h3 id="guideVoucherTitle"></h3></div><kbd id="guideVoucherKey"></kbd></div><p class="guide-use" id="guideVoucherUse"></p><div class="guide-drcr"><div><span>DEBIT / Dr</span><strong id="guideDebit"></strong></div><div><span>CREDIT / Cr</span><strong id="guideCredit"></strong></div></div><div class="guide-caution" id="guideVoucherAvoid"></div><ol class="guide-steps" id="guideVoucherSteps"></ol><button class="button button-primary" id="guideTry" type="button">Try the business case <span>→</span></button></div>
+            <p class="lab-note">For a simple two-account entry, the debit/credit effect stays the same in invoice and voucher views. In Tally, use the appropriate stock, tax and bill-allocation fields for your actual transaction.</p>
+          </div>
+
+          <div class="tally-panel" id="tallyEntryPanel" role="tabpanel" aria-labelledby="tally-tab-entry" hidden>
+            <div class="case-header"><div><span class="section-kicker">YOUR TRAINING COMPANY / APRIL 2026</span><h3 id="tallyCompany"></h3><p>Premium A4 paper reams · Opening balances: zero</p></div><button class="outline-button" id="tallyNewCase" type="button">New sample company <span>↻</span></button></div>
+            <p class="case-assumptions">Teaching case: no GST, one stock item at a constant cost, periodic inventory. The final statement values unsold stock and transfers the period’s profit into equity.</p>
+            <details class="ledger-setup"><summary>Before you begin: create the ledgers and stock item in Tally</summary><p>In Tally, create the company for FY 2026–27. Use Alt+G → Create Master → Ledger, or Alt+C from a ledger-selection field. Create the stock item “Premium A4 paper reams” with a suitable unit, then use these ledger groups.</p><div class="ledger-master-grid" id="tallyMasters"></div></details>
+            <div class="case-toolbar"><label for="tallyTransaction"><span class="field-label">Case document</span><select id="tallyTransaction"></select></label><div class="case-progress"><strong id="tallyPostedCount">0 / 20 posted</strong><div><span id="tallyCaseProgress"></span></div></div></div>
+            <div class="tally-workspace">
+              <article class="case-document"><div class="document-top"><span class="document-brand">SOURCE DOCUMENT</span><span id="tallyDocumentDate"></span></div><span class="document-reference" id="tallyDocumentRef"></span><h4 id="tallyDocumentTitle"></h4><p id="tallyDocumentStory"></p><div class="document-amount"><span>TRANSACTION VALUE</span><strong id="tallyDocumentAmount"></strong></div><details id="tallyWalkthrough"><summary>Show the worked entry &amp; Tally steps</summary><div id="tallyWorkedEntry"></div><p id="tallyWorkedReason"></p><ol id="tallyWorkedSteps"></ol><button class="tiny-link" id="tallyFillExample" type="button">Fill from this worked example <span>→</span></button></details></article>
+              <div class="tally-simulator" id="tallySimulator" tabindex="-1" aria-label="Tally voucher learning simulator"><div class="simulator-top"><div><span class="section-kicker">VOUCHER TRAINER / LEARNING SIMULATION</span><strong id="tallySelectedVoucher">Choose a voucher</strong></div><label class="shortcut-switch"><input id="tallyKeyboardMode" type="checkbox" />Practise keys</label></div><div class="voucher-ribbon" id="tallyVoucherRibbon" role="group" aria-label="Voucher selection"></div>
+                <form id="tallyForm"><div class="sim-date-row"><label for="tallyDate"><span class="field-label">Voucher date · F2</span><input id="tallyDate" type="date" required /></label><button class="tiny-link" type="button" id="tallyModeButton">Invoice/view help · Ctrl+H</button></div><div class="invoice-mode-help" id="tallyModeHelp" hidden></div><div class="tally-entry-fields"><label for="tallyDebit"><span class="field-label">Debit ledger</span><select id="tallyDebit" required></select></label><label for="tallyDebitAmount"><span class="field-label">Debit amount (₹)</span><input id="tallyDebitAmount" type="number" min="1" max="1000000000" step="1" placeholder="0" required /></label><label for="tallyCredit"><span class="field-label">Credit ledger</span><select id="tallyCredit" required></select></label><label for="tallyCreditAmount"><span class="field-label">Credit amount (₹)</span><input id="tallyCreditAmount" type="number" min="1" max="1000000000" step="1" placeholder="0" required /></label></div><label class="narration-label" for="tallyNarration"><span class="field-label">Narration / source reference</span><input id="tallyNarration" type="text" maxlength="200" placeholder="Explain the transaction in a few words" /></label><div class="tally-entry-totals"><span>Debit <strong id="tallyDebitTotal">₹0</strong></span><span>Credit <strong id="tallyCreditTotal">₹0</strong></span><b id="tallyDifference">Choose your accounts</b></div><p class="tally-feedback" id="tallyFeedback" aria-live="polite">Choose the voucher first, then apply the debit and credit logic.</p><div class="tally-entry-actions"><button class="button button-primary" id="tallyPost" type="submit">Check &amp; post <span>Ctrl+A</span></button><button class="outline-button" id="tallyNext" type="button" disabled>Next document <span>→</span></button></div></form><p class="lab-note">Enable “Practise keys”, then focus inside this trainer. Function keys select vouchers; F2 selects the date; Ctrl+A checks and posts your entry here.</p>
+              </div>
+            </div>
+            <div class="live-book-stats" id="tallyLiveStats"></div><details class="tally-daybook"><summary>Live Day Book <span id="tallyDaybookCount">0 vouchers</span></summary><p id="tallyDaybookEmpty">Post your first voucher to start the business’s books.</p><div class="lab-table-wrap"><table class="lab-table"><thead><tr><th>Date</th><th>Voucher</th><th>Debit ledger</th><th>Credit ledger</th><th>Amount</th></tr></thead><tbody id="tallyDaybookBody"></tbody></table></div></details><div class="case-completion"><p id="tallyCompletionText">Complete all 20 documents to carry this company into the balance sheet lab.</p><button class="button button-primary" id="tallyToBalance" type="button" disabled>See this company’s balance sheet <span>→</span></button></div>
+          </div>
+
+          <div class="tally-panel document-coach-panel" id="tallyCoachPanel" role="tabpanel" aria-labelledby="tally-tab-coach" hidden>
+            <div class="coach-intro">
+              <div><span class="section-kicker">DOCUMENT → ENTRY / LEARNING TOOL</span><h3>Let the document explain the voucher.</h3><p>Drop in an invoice, receipt, payment proof, or return note. Ledgerly reads the useful clues, suggests the Tally voucher, maps both ledgers, and explains the accounting logic.</p></div>
+              <div class="coach-status" id="coachStatus" aria-live="polite"><span class="coach-status-dot"></span><div><strong>Ready to inspect</strong><small>Nothing uploaded yet</small></div></div>
+            </div>
+            <div class="document-coach-workspace">
+              <article class="coach-ingest-card">
+                <div class="coach-card-heading"><div><span class="section-kicker">01 / BRING THE SOURCE</span><h4>Upload or paste a document</h4></div><span class="coach-step-badge">INPUT</span></div>
+                <label class="coach-dropzone" id="coachDropzone" for="coachFileInput" tabindex="0"><input id="coachFileInput" type="file" accept=".pdf,.png,.jpg,.jpeg,.webp,.txt,.csv,.json,.doc,.docx,application/pdf,image/*,text/plain,text/csv,application/json,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" /><span class="coach-upload-icon">↑</span><strong>Drop a document here</strong><span>Scanned PDF, image, Word, TXT, CSV or JSON · up to 10 MB</span><small>PDF scans are rendered page-by-page and read with browser OCR. Use the capture box if a scan needs a little help.</small></label>
+                <div class="coach-file-preview" id="coachFilePreview" hidden></div>
+                <div class="coach-or"><span>or try a realistic sample</span></div>
+                <div class="coach-samples" id="coachSamples" aria-label="Sample documents"><button type="button" data-coach-sample="sales">Sales invoice</button><button type="button" data-coach-sample="purchase">Purchase bill</button><button type="button" data-coach-sample="receipt">Customer receipt</button><button type="button" data-coach-sample="payment">Bank payment</button><button type="button" data-coach-sample="return">Sales return</button></div>
+                <details class="coach-manual-fallback" id="coachManualFallback"><summary><span class="coach-fallback-icon">✎</span><span><strong>Manual fallback</strong><small>Couldn’t read the file? Paste or describe the bill here.</small></span><b>＋</b></summary><div class="coach-manual-body"><label class="coach-text-label" for="coachText"><span class="field-label">Document text / quick capture</span><textarea id="coachText" rows="9" placeholder="Paste the text from the document, or describe what you can see.\n\nExample: Sales invoice INV-104 dated 18/04/2026. Riya Services bought goods for ₹42,000 on credit."></textarea></label><div class="coach-input-meta"><span id="coachCharacterCount">0 characters</span><span>Include date, amount, party and words like “paid”, “sold”, “returned” or “received”.</span></div></div></details>
+                <div class="coach-ingest-actions"><button class="button button-primary" id="coachAnalyze" type="button">Analyze document <span>✦</span></button><button class="outline-button" id="coachClear" type="button">Clear <span>×</span></button></div>
+              </article>
+
+              <article class="coach-result-card" aria-live="polite">
+                <div class="coach-card-heading"><div><span class="section-kicker">02 / READ THE ENTRY</span><h4>Suggested Tally treatment</h4></div><span class="coach-step-badge coach-step-result">OUTPUT</span></div>
+                <div class="coach-empty" id="coachEmpty"><div class="coach-empty-mark">⌁</div><h5>Your answer will appear here</h5><p>Upload a source or choose a sample. Then challenge the suggestion by changing the voucher or either ledger.</p><div class="coach-empty-points"><span>✓ Voucher type</span><span>✓ Debit / credit heads</span><span>✓ The reason behind both sides</span></div></div>
+                <div id="coachResult" hidden>
+                  <div class="coach-confidence"><div><span class="section-kicker">READING CONFIDENCE</span><strong id="coachConfidenceLabel">High confidence</strong></div><div class="coach-confidence-meter"><span id="coachConfidenceBar"></span></div><b id="coachConfidenceValue">0%</b></div>
+                  <div class="coach-signals" id="coachSignals"></div>
+                  <details class="coach-extracted-source"><summary>See the text extracted from this document</summary><pre id="coachExtractedText"></pre></details>
+                  <div class="coach-entry-card">
+                    <div class="coach-entry-card-top"><div><span class="section-kicker">TALLY VOUCHER</span><strong id="coachVoucherTitle">Sales voucher</strong></div><label class="coach-inline-select"><span>Correct it</span><select id="coachVoucherSelect" aria-label="Correct suggested voucher"></select></label></div>
+                    <div class="coach-entry-grid">
+                      <label><span class="field-label">Debit ledger / head</span><select id="coachDebitSelect" aria-label="Debit ledger"></select><small id="coachDebitGroup"></small></label>
+                      <label><span class="field-label">Credit ledger / head</span><select id="coachCreditSelect" aria-label="Credit ledger"></select><small id="coachCreditGroup"></small></label>
+                      <label><span class="field-label">Amount (₹)</span><input id="coachAmount" type="number" min="0" step="0.01" aria-label="Transaction amount" /></label>
+                      <label><span class="field-label">Document date</span><input id="coachDate" type="date" aria-label="Document date" /></label>
+                      <label class="coach-reference-field"><span class="field-label">Reference / invoice no.</span><input id="coachReference" type="text" maxlength="80" aria-label="Document reference" /></label>
+                    </div>
+                    <div class="coach-double-entry"><div><span>DEBIT</span><strong id="coachDebitLine">Customer Dr</strong></div><i>＝</i><div><span>CREDIT</span><strong id="coachCreditLine">Sales Cr</strong></div><b id="coachEntryAmount">₹0</b></div>
+                  </div>
+                  <div class="coach-gst-card">
+                    <div class="coach-gst-heading"><div><span class="section-kicker">GST DECISION</span><h5>Which tax ledger is needed?</h5></div><span class="coach-gst-pill" id="coachGstPill">No GST detected</span></div>
+                    <div class="coach-gst-controls"><label><span class="field-label">Supply scenario</span><select id="coachGstScenario" aria-label="GST supply scenario"><option value="unknown">Choose: same or different state</option><option value="intra">Same state · CGST + SGST</option><option value="inter">Different state · IGST</option><option value="none">Exempt / nil-rated · no GST</option></select></label><label><span class="field-label">GST rate (%)</span><input id="coachGstRate" type="number" min="0" max="100" step="0.01" value="18" aria-label="GST rate" /></label></div>
+                    <div class="coach-gst-summary"><div><span>Taxable value</span><strong id="coachGstTaxable">₹0</strong></div><div><span>CGST</span><strong id="coachGstCgst">—</strong></div><div><span>SGST</span><strong id="coachGstSgst">—</strong></div><div><span>IGST</span><strong id="coachGstIgst">—</strong></div><div><span>Invoice total</span><strong id="coachGstTotal">₹0</strong></div></div>
+                    <p class="coach-gst-why" id="coachGstWhy">Choose the state scenario to see the correct GST ledgers and why they are used.</p>
+                    <div class="coach-gst-lines" id="coachGstLines"></div>
+                  </div>
+                  <div class="coach-why-card"><div class="coach-why-icon" id="coachWhyIcon">?</div><div><span class="section-kicker">WHY THIS ENTRY?</span><h5 id="coachWhyTitle">The document points to a sale.</h5><p id="coachWhyText"></p><ol id="coachWhySteps"></ol></div></div>
+                  <div class="coach-result-actions"><button class="button button-primary" id="coachUseTally" type="button">Open Tally trainer <span>→</span></button><button class="outline-button" id="coachCopyEntry" type="button">Copy full entry <span>↗</span></button></div>
+                  <p class="coach-review-note" id="coachReviewNote">Treat this as a learning suggestion: check the original document, your company’s ledger names, tax treatment, and invoice allocation before saving in real Tally.</p>
+                </div>
+              </article>
+            </div>
+            <div class="coach-footer-note"><span>✦</span><p><strong>How the coach thinks:</strong> it looks for transaction language, the money direction, party clues, reference numbers and totals. Your corrections stay visible so you can compare the rule with the source document.</p><span class="coach-supported">Browser-only · no document leaves this device</span></div>
+          </div>
+
+          <div class="tally-panel" id="tallyShortcutsPanel" role="tabpanel" aria-labelledby="tally-tab-shortcuts" hidden><div class="shortcut-desk-heading"><h3>Less mouse. More muscle memory.</h3><p>These are Tally Prime’s standard shortcuts. Click a voucher card to practise its key in the trainer.</p></div><div class="shortcut-card-grid" id="tallyShortcutCards"></div><div class="utility-shortcuts" id="tallyUtilityKeys"></div><p class="lab-note">Alt+C creates a master from a ledger-selection field; in an amount field it can open the calculator. Shortcut actions depend on the screen. Debit/Credit Note can also be opened through F10 → Accounting Vouchers.</p><a class="tiny-link" href="https://help.tallysolutions.com/keyboard-shortcuts-tally-prime/" target="_blank" rel="noopener noreferrer">Tally’s official shortcut reference <span>↗</span></a></div>
+          <dialog class="practice-master-dialog" id="tallyMasterDialog"><form id="tallyMasterForm"><div class="guide-title-row"><h3>Create a practice ledger</h3><button class="dialog-close" id="tallyMasterClose" type="button" aria-label="Close ledger creation">×</button></div><p>This adds a selectable ledger to this training company. In Tally, Alt+C opens master creation from a ledger-selection field.</p><label for="tallyMasterName"><span class="field-label">Ledger name</span><input id="tallyMasterName" required maxlength="60" /></label><label for="tallyMasterGroup"><span class="field-label">Under group</span><select id="tallyMasterGroup"></select></label><p id="tallyMasterFeedback" aria-live="polite"></p><button class="button button-primary" type="submit">Create practice ledger <span>✓</span></button></form></dialog>
+        </section>
+
+        </div>
+         <div class="learning-screen" id="screen-trial-balance" data-screen="trial-balance" role="tabpanel" aria-labelledby="top-trial-balance" hidden>
+         <section class="content-section statement-learning-section trial-balance-section" id="trial-balance">
+           <div class="section-heading"><div><span class="section-kicker">04 / CHECK THE BOOKS</span><h2>Bring every ledger<br /><em>into balance.</em></h2></div><p>A trial balance collects the closing debit and credit balances from the ledgers. It is the checkpoint before you prepare the financial statements.</p></div>
+           <div class="balance-case-header statement-case-header"><div><span class="section-kicker">SAMPLE TRADING BUSINESS</span><h3 id="trialBalanceCompany"></h3><p id="trialBalanceAsOf"></p></div><div class="balance-case-actions"><button class="button button-primary" id="trialBalanceRandomize" type="button">New sample books <span>↻</span></button></div></div>
+           <div class="balance-equation-bar trial-equation-bar"><div><span>Total debit balances</span><strong id="trialBalanceDebitTotal"></strong></div><b>=</b><div><span>Total credit balances</span><strong id="trialBalanceCreditTotal"></strong></div><span class="balance-valid" id="trialBalanceValid">✓ Balanced</span></div>
+           <div class="statement-grid trial-balance-grid"><article class="statement-column"><div class="statement-column-title"><span>01</span><h4>Closing balances</h4><small>Every account with a debit or credit side</small></div><div class="trial-balance-table-wrap"><table class="trial-balance-table"><thead><tr><th>Account</th><th>Debit</th><th>Credit</th></tr></thead><tbody id="trialBalanceRows"></tbody><tfoot><tr><th>Total</th><th id="trialBalanceDebitFooter"></th><th id="trialBalanceCreditFooter"></th></tr></tfoot></table></div></article><article class="statement-column statement-coach-column"><span class="section-kicker">READ THE CHECKPOINT</span><h4>What does a balanced trial balance tell you?</h4><p id="trialBalanceExplanation">Select an account row to see why its balance sits on the debit or credit side.</p><div class="statement-formula"><span>Debit balances</span><b>Assets + expenses + drawings</b><span>Credit balances</span><b>Capital + liabilities + income</b></div><div class="statement-quiz" id="trialBalanceQuiz"><span class="section-kicker">QUICK CHECK</span><strong>Where does a credit balance appear?</strong><div><button type="button" data-trial-answer="debit">Debit column</button><button type="button" data-trial-answer="credit">Credit column</button></div><p id="trialBalanceQuizFeedback" aria-live="polite"></p></div></article></div>
+         </section>
+         </div>
+
+         <div class="learning-screen" id="screen-profit-loss" data-screen="profit-loss" role="tabpanel" aria-labelledby="top-profit-loss" hidden>
+         <section class="content-section statement-learning-section profit-loss-section" id="profit-loss">
+           <div class="section-heading"><div><span class="section-kicker">05 / MEASURE THE RESULT</span><h2>Turn the month<br /><em>into a result.</em></h2></div><p>Profit &amp; Loss separates trading income, cost of goods, operating expenses and other income to show what the business earned.</p></div>
+           <div class="balance-case-header statement-case-header"><div><span class="section-kicker">SAMPLE TRADING BUSINESS</span><h3 id="pnlCompany"></h3><p id="pnlAsOf"></p></div><div class="balance-case-actions"><button class="button button-primary" id="pnlRandomize" type="button">New result <span>↻</span></button></div></div>
+           <div class="balance-equation-bar pnl-equation-bar"><div><span>Gross profit</span><strong id="pnlGrossProfit"></strong></div><b>−</b><div><span>Operating expenses</span><strong id="pnlExpenses"></strong></div><b>+</b><div><span>Other income</span><strong id="pnlOtherIncome"></strong></div><b>=</b><div><span>Net result</span><strong id="pnlNetResult"></strong></div></div>
+           <div class="statement-grid pnl-statement-grid"><article class="statement-column"><div class="statement-column-title"><span>01</span><h4>Trading result</h4><small>Sales less the cost of goods sold</small></div><div class="statement-account"><span>Net sales</span><strong id="pnlSales"></strong></div><div class="statement-account"><span>Less: cost of goods sold</span><strong id="pnlCogs"></strong></div><div class="statement-total"><span>Gross profit</span><strong id="pnlGrossProfitFooter"></strong></div></article><article class="statement-column"><div class="statement-column-title"><span>02</span><h4>Profit &amp; Loss</h4><small>Expenses and other income for the period</small></div><div class="statement-account"><span>Office rent</span><strong id="pnlRent"></strong></div><div class="statement-account"><span>Office salaries</span><strong id="pnlSalary"></strong></div><div class="statement-account"><span>Depreciation</span><strong id="pnlDepreciation"></strong></div><div class="statement-account"><span>Insurance consumed</span><strong id="pnlInsurance"></strong></div><div class="statement-account"><span>Interest income</span><strong id="pnlInterest"></strong></div><div class="statement-total"><span>Net result</span><strong id="pnlNetResultFooter"></strong></div></article></div>
+           <div class="balance-explanation statement-coach-wide"><span class="section-kicker">FOLLOW THE RESULT</span><h4 id="pnlExplanationTitle">Profit is the bridge to equity.</h4><p id="pnlExplanation">The final profit or loss is transferred to the owner’s equity in the balance sheet. It is not an extra cash receipt.</p><div class="statement-quiz pnl-quiz" id="pnlQuiz"><span class="section-kicker">QUICK CHECK</span><strong>Which item belongs in Profit &amp; Loss?</strong><div><button type="button" data-pnl-answer="capital">Owner’s capital</button><button type="button" data-pnl-answer="rent">Office rent</button><button type="button" data-pnl-answer="loan">Business loan</button></div><p id="pnlQuizFeedback" aria-live="polite"></p></div></div>
+           <details class="profit-bridge statement-detail"><summary>See the calculation behind the result <strong id="pnlFormulaResult"></strong></summary><div class="profit-calculation" id="pnlFormulaRows"></div></details>
+         </section>
+         </div>
+
+         <div class="learning-screen" id="screen-balance-sheet" data-screen="balance-sheet" role="tabpanel" aria-labelledby="top-balance-sheet" hidden>
+        <section class="content-section balance-lab-section" id="balance-sheet">
+           <div class="section-heading"><div><span class="section-kicker">06 / SEE THE BIG PICTURE</span><h2>Make the balance sheet<br /><em>make sense.</em></h2></div><p>Explore a completed sample business, trace its balances back to vouchers, then place the accounts yourself. Every new sample is generated from balanced transactions.</p></div>
+          <div class="balance-case-header"><div><span class="section-kicker">SAMPLE TRADING BUSINESS</span><h3 id="balanceCompany"></h3><p id="balanceAsOf"></p></div><div class="balance-case-actions"><button class="outline-button" id="balanceDownload" type="button">Download case data <span>↓</span></button><button class="button button-primary" id="balanceRandomize" type="button">New random balance sheet <span>↻</span></button></div></div>
+          <div class="balance-equation-bar"><div><span>ASSETS</span><strong id="balanceTotalAssets"></strong></div><b>=</b><div><span>LIABILITIES</span><strong id="balanceTotalLiabilities"></strong></div><b>+</b><div><span>OWNER’S EQUITY</span><strong id="balanceTotalEquity"></strong></div><span class="balance-valid" id="balanceValid">✓ Balanced</span></div>
+          <div class="lab-section-tabs" role="tablist" aria-label="Balance sheet learning views"><button id="balance-tab-learn" type="button" role="tab" data-balance-tab="learn" aria-selected="true" aria-controls="balanceLearnPanel">Explore the statement</button><button id="balance-tab-build" type="button" role="tab" data-balance-tab="build" aria-selected="false" aria-controls="balanceBuildPanel" tabindex="-1">Build it yourself <span>15</span></button></div>
+          <div class="balance-learn-panel" id="balanceLearnPanel" role="tabpanel" aria-labelledby="balance-tab-learn"><div class="statement-grid"><article class="statement-column"><div class="statement-column-title"><span>01</span><h4>Assets</h4><small>What the business owns</small></div><div id="balanceAssetRows"></div><div class="statement-total"><span>Total assets</span><strong id="balanceAssetsFooter"></strong></div></article><article class="statement-column"><div class="statement-column-title"><span>02</span><h4>Liabilities &amp; equity</h4><small>How the assets are financed</small></div><div id="balanceFundingRows"></div><div class="statement-total"><span>Total liabilities &amp; equity</span><strong id="balanceFundingFooter"></strong></div></article></div><div class="balance-explanation" id="balanceExplanation" aria-live="polite"><span class="section-kicker">FOLLOW THE MONEY</span><p>Click any account in the statement to see why it belongs there and which vouchers created the balance.</p></div><details class="profit-bridge"><summary>How does profit reach the balance sheet? <strong id="balanceProfitSummary"></strong></summary><div class="profit-calculation" id="balanceProfitRows"></div><p id="balanceInventoryNote"></p></details><details class="balance-case-data"><summary>Inspect the 20 source transactions</summary><p>All source transactions are recorded in this completed sample. The statement includes periodic closing-stock valuation and the profit transfer to equity.</p><div class="lab-table-wrap"><table class="lab-table"><thead><tr><th>Date</th><th>Voucher</th><th>Story</th><th>Amount</th></tr></thead><tbody id="balanceSourceRows"></tbody></table></div></details></div>
+          <div class="balance-build-panel" id="balanceBuildPanel" role="tabpanel" aria-labelledby="balance-tab-build" hidden><div class="balance-build-heading"><div><span class="section-kicker">SORT THE ACCOUNTS</span><h3>Balance sheet, or Profit &amp; Loss?</h3><p>Choose where each balance belongs. Drawings reduce equity; individual income and expense accounts belong in Profit &amp; Loss.</p></div><strong id="balanceBuildScore">0 / 15</strong></div><form id="balanceBuildForm"><div class="classification-grid" id="balanceClassification"></div><div class="balance-build-actions"><button class="button button-primary" type="submit">Check my classifications <span>✓</span></button><button class="outline-button" id="balanceShowAnswers" type="button">Show &amp; explain answers <span>↗</span></button></div><p class="tally-feedback" id="balanceBuildFeedback" aria-live="polite">Sort all 15 accounts, then check your work.</p></form></div>
+        </section>
+
+        </div>
+        <div class="learning-screen" id="screen-practice" data-screen="practice" role="tabpanel" aria-labelledby="top-practice" hidden>
+        <section class="content-section practice-section" id="practice">
+             <div class="practice-banner"><div><span class="section-kicker">09 / PRACTICE SESSIONS</span><h2>Ten questions.<br /><em>A fresh challenge every time.</em></h2><p>Real transactions. Clear explanations. A little more confidence with every session.</p></div><div class="practice-score"><span>SESSION SCORE</span><strong id="quizScore">0</strong><small>/ 10</small></div></div>
+          <div class="practice-desk">
+            <div class="practice-stats" aria-label="Practice statistics"><div><strong id="bankCount">—</strong><span>questions in the bank</span></div><div><strong>10</strong><span>questions per session</span></div><div><strong id="sessionCount">0</strong><span>completed sessions</span></div><div><strong id="practiceBest">—</strong><span>personal best / 10</span></div></div>
+            <div class="practice-controls"><label for="practiceTopic"><span class="field-label">Choose your focus</span><select id="practiceTopic"><option value="all">Mixed practice · all topics</option></select></label><button class="button button-primary" id="practiceStart" type="button" disabled>Loading question bank…</button></div>
+            <p class="practice-notice" id="practiceNotice" role="status">Connecting to the question bank…</p>
+            <div class="practice-topics" id="practiceTopics" aria-label="Topics in the question bank"></div>
+
+            <div class="practice-intro" id="practiceIntro"><div class="intro-symbol" aria-hidden="true">✦</div><h3>Make the rules second nature.</h3><p>Start a session to draw 10 unique questions from the database. Questions and answer choices are shuffled, and your last set is left out of the next session.</p><div class="session-promises"><span>✓ No timer pressure</span><span>✓ Explain every answer</span><span>✓ Review your mistakes</span></div></div>
+
+            <div class="session-panel" id="sessionPanel" hidden>
+              <div class="quiz-progress"><span class="section-kicker">QUESTION <strong id="questionNumber">01</strong> OF 10</span><div class="quiz-progress-track" role="progressbar" aria-label="Questions answered" aria-valuemin="0" aria-valuemax="10" aria-valuenow="0" id="sessionProgress"><span id="quizProgress"></span></div></div>
+              <ol class="session-steps" id="sessionSteps" aria-label="Session question progress"></ol>
+              <div class="quiz-question"><span class="quiz-tag" id="quizTag"></span><h3 id="quizQuestion" tabindex="-1"></h3></div>
+              <div class="quiz-options" id="quizOptions" role="group" aria-labelledby="quizQuestion"></div>
+              <div class="quiz-feedback" id="quizFeedback" aria-live="polite"></div>
+              <div class="session-actions"><span class="keyboard-hint">Choose with keys 1–4, then press Enter</span><button class="button button-primary" id="nextQuestion" type="button" disabled>Check answer <span>→</span></button></div>
+            </div>
+
+            <div class="session-results" id="sessionResults" hidden>
+              <div class="result-heading"><div><span class="section-kicker">SESSION COMPLETE</span><h3 id="resultTitle"></h3><p id="resultSummary"></p></div><div class="result-percent" id="resultPercent"></div></div>
+              <div class="result-topics" id="resultTopics"></div>
+              <div class="review-heading"><h4>Your answer review</h4><div class="review-filters" role="group" aria-label="Review filter"><button type="button" id="reviewAll" aria-pressed="true">All 10</button><button type="button" id="reviewMistakes" aria-pressed="false">Mistakes only</button></div></div>
+              <div class="answer-review" id="answerReview"></div><p class="perfect-review" id="perfectReview" hidden>No mistakes this session. Beautifully balanced!</p>
+              <button class="button button-primary" id="practiceAgain" type="button">Start a fresh 10-question session <span>↻</span></button>
+            </div>
+
+             <section class="saved-mistakes" id="mistakeNotebook" aria-labelledby="mistakeNotebookTitle"><div class="review-heading"><div><span class="section-kicker">SAVED ACROSS SESSIONS</span><h4 id="mistakeNotebookTitle">Your mistake notebook</h4></div><span id="notebookCount">0 to retry</span></div><p class="practice-notice">Retry missed questions here. A correct retry clears the question from your notebook.</p><div id="notebookQuestions"></div></section>
+             <details class="practice-history" id="practiceHistory"><summary>Recent sessions <span id="historyCount">0 saved</span></summary><p id="historyEmpty">Your completed sessions will appear here. Results are saved on this browser.</p><div class="history-table-wrap" id="historyTableWrap" hidden><table class="history-table"><thead><tr><th>Completed</th><th>Focus</th><th>Score</th></tr></thead><tbody id="historyBody"></tbody></table></div></details>
+            <p class="quiz-best" id="quizBest">Scores stay on this browser · Basic examples state their GST and inventory assumptions</p>
+          </div>
+        </section>
+         </div>
+
+         <section class="tools-workspace" id="toolsWorkspace" aria-labelledby="toolsTitle" hidden>
+           <div class="tools-hero"><div><span class="section-kicker">THE LEDGERLY GST TOOLBOX</span><h1 id="toolsTitle">Work smarter.<br /><em>Stay GST-ready.</em></h1><p>Practical tools for calculations, invoices, reconciliation, returns and compliance. Practise the preparation here, then continue the authenticated filing step on the official GST portal.</p></div><div class="tools-hero-art" aria-hidden="true"><span>Dr</span><i>↔</i><span>Cr</span><small>books · tax · evidence</small></div></div>
+            <div class="tools-intro-grid"><button class="tool-launch-card gst-tool-card active" type="button" data-tool-launch="calculator"><span class="tool-launch-icon">₹</span><span><small>CALCULATE CORRECTLY</small><strong>GST calculator</strong><em>CGST, SGST, IGST and inclusive tax</em></span><b>→</b></button><button class="tool-launch-card gst-tool-card" type="button" data-tool-launch="invoice"><span class="tool-launch-icon">▤</span><span><small>CREATE THE SOURCE</small><strong>Invoice studio</strong><em>Build an Indian GST invoice preview</em></span><b>→</b></button><button class="tool-launch-card gst-tool-card" type="button" data-tool-launch="reconciliation"><span class="tool-launch-icon">↔</span><span><small>FIND THE DIFFERENCE</small><strong>Reconciliation</strong><em>Match registers with GSTR-2B</em></span><b>→</b></button><button class="tool-launch-card gst-tool-card" type="button" data-tool-launch="returns"><span class="tool-launch-icon">✓</span><span><small>PREPARE, THEN FILE</small><strong>Return prep</strong><em>GSTR-1 and GSTR-3B working papers</em></span><b>→</b></button><button class="tool-launch-card gst-tool-card" type="button" data-tool-launch="registration"><span class="tool-launch-icon">◎</span><span><small>GET STARTED RIGHT</small><strong>Registration desk</strong><em>Eligibility and REG-01 document plan</em></span><b>→</b></button><button class="tool-launch-card gst-tool-card" type="button" data-tool-launch="compliance"><span class="tool-launch-icon">◷</span><span><small>STAY AHEAD</small><strong>Compliance desk</strong><em>Deadlines, notices, ledgers and filing</em></span><b>→</b></button><button class="tool-launch-card accounting-tool-card" type="button" data-tool-launch="coach"><span class="tool-launch-icon">⌁</span><span><small>ACCOUNTING PRACTICE</small><strong>Document coach</strong><em>Upload a bill and understand the entry</em></span><b>→</b></button><button class="tool-launch-card accounting-tool-card" type="button" data-tool-launch="entry"><span class="tool-launch-icon">T</span><span><small>ACCOUNTING PRACTICE</small><strong>Tally entry trainer</strong><em>Practise dates, heads and posting</em></span><b>→</b></button><button class="tool-launch-card accounting-tool-card" type="button" data-tool-launch="shortcuts"><span class="tool-launch-icon">⌘</span><span><small>ACCOUNTING PRACTICE</small><strong>Shortcut desk</strong><em>Keep your Tally muscle memory handy</em></span><b>→</b></button></div>
+            <div class="tools-main-card"><div class="tools-card-top"><div><span class="section-kicker">SELECTED TOOL</span><h2 id="toolsSelectedTitle">GST calculator</h2></div><span class="tools-card-note">Prepare here · file on the official portal</span></div><div class="lab-section-tabs tools-tally-tabs" id="toolsTallyTabs" role="tablist" aria-label="Choose a practical tool"><button type="button" data-tally-tab="calculator" aria-selected="true">GST calculator <span>GST</span></button><button type="button" data-tally-tab="invoice" aria-selected="false" tabindex="-1">Invoice studio <span>PDF</span></button><button type="button" data-tally-tab="reconciliation" aria-selected="false" tabindex="-1">Reconciliation <span>2B</span></button><button type="button" data-tally-tab="returns" aria-selected="false" tabindex="-1">Return prep <span>GSTR</span></button><button type="button" data-tally-tab="registration" aria-selected="false" tabindex="-1">Registration <span>REG</span></button><button type="button" data-tally-tab="compliance" aria-selected="false" tabindex="-1">Compliance <span>DATES</span></button></div><div class="tools-panels" id="toolsPanels">
+              <section class="gst-tool-panel" data-gst-tool-panel="calculator" role="tabpanel"></section>
+              <section class="gst-tool-panel" data-gst-tool-panel="invoice" role="tabpanel" hidden></section>
+              <section class="gst-tool-panel" data-gst-tool-panel="reconciliation" role="tabpanel" hidden></section>
+              <section class="gst-tool-panel" data-gst-tool-panel="returns" role="tabpanel" hidden></section>
+              <section class="gst-tool-panel" data-gst-tool-panel="registration" role="tabpanel" hidden></section>
+              <section class="gst-tool-panel" data-gst-tool-panel="compliance" role="tabpanel" hidden></section>
+            </div></div>
+           <div class="tools-tip-strip"><span>✦</span><p><strong>Good habit:</strong> first identify the event, then choose the voucher, then confirm the ledgers and tax treatment. The tool helps you practise the order.</p></div>
+          </section>
+
+          <section class="work-workspace" id="workWorkspace" aria-labelledby="workTitle" hidden>
+            <div class="work-hero">
+              <div class="work-hero-copy"><span class="section-kicker">WORK / BUSINESS CONTROL ROOM</span><h1 id="workTitle">One transaction.<br /><em>Every consequence.</em></h1><p>Run the books, GST preparation, reconciliation and month-end review from one connected workspace. Enter a transaction once and follow its full audit-ready lifecycle.</p><div class="work-hero-actions"><button class="button button-primary" id="workAddTransaction" type="button">Add transaction <span>＋</span></button><button class="outline-button work-light-button" id="workFollowLatest" type="button">Follow latest transaction <span>→</span></button></div></div>
+               <div class="work-company-card"><div class="work-company-switcher"><span class="section-kicker">ACTIVE COMPANY</span><select id="workCompanySelect" aria-label="Switch company"></select><button class="work-icon-button" id="workAddCompany" type="button" aria-label="Add company">＋</button></div><div class="work-company-meta"><strong id="workCompanyName">Aarav Electronics</strong><span id="workCompanyGstin">GSTIN loading…</span><small id="workCompanyPeriod">FY 2026–27 · Regular</small></div><div class="work-company-status"><span class="work-live-dot"></span> Local work data · isolated by company <button type="button" id="workCompanySettings">Company profile</button><button type="button" id="workResetDemo">Reset demo</button></div></div>
+            </div>
+             <div class="work-legal-strip"><span>i</span><p><strong>Work mode boundary:</strong> Ledgerly prepares and explains business data here. GST portal login, OTP, payment, IRN, e-way bill and filing confirmation require the official portal or an authorised integration.</p></div>
+             <details class="work-guide" open>
+               <summary><span><b>New to Work?</b> Follow the connected workflow in four steps.</span><strong>How Work works <span aria-hidden="true">⌄</span></strong></summary>
+               <div class="work-guide-grid">
+                 <article><span class="work-guide-number">01</span><div><h3>Choose the company</h3><p>Work data is separated by company. Check the active company, GSTIN and financial year before entering anything.</p><button type="button" data-work-guide-view="masters">Check company &amp; masters <span>→</span></button></div></article>
+                 <article><span class="work-guide-number">02</span><div><h3>Enter each transaction once</h3><p>Use <b>Add transaction</b> for a sale, purchase, expense, credit note or debit note. Ledgerly calculates the tax split and accounting lines.</p><button type="button" data-work-guide-add="sale">Add a sample sale <span>＋</span></button></div></article>
+                 <article><span class="work-guide-number">03</span><div><h3>Review the connected trail</h3><p>Use Transactions to search and select <b>Follow</b>. The trace links the source document, books, GST, return working paper and audit record.</p><button type="button" data-work-guide-view="transactions">Open transactions <span>→</span></button></div></article>
+                 <article><span class="work-guide-number">04</span><div><h3>Close and hand off</h3><p>Reconcile purchases with GSTR-2B, finish the Compliance checklist, then use the official GST portal for payment and filing.</p><button type="button" data-work-guide-view="compliance">Open checklist <span>→</span></button></div></article>
+               </div>
+               <p class="work-guide-note"><span>✦</span> Start with the seeded demo company to learn the flow. Your Work data is saved in this browser; use <b>Reset demo</b> in the company card to restore the sample.</p>
+             </details>
+             <div class="work-toolbar"><div class="work-view-tabs" role="tablist" aria-label="Business workspace views"><button type="button" class="active" data-work-view="overview">Overview</button><button type="button" data-work-view="transactions">Transactions</button><button type="button" data-work-view="masters">Masters</button><button type="button" data-work-view="gst">GST &amp; returns</button><button type="button" data-work-view="reconciliation">Reconciliation</button><button type="button" data-work-view="reports">Reports</button><button type="button" data-work-view="simulation">Month-end lab</button><button type="button" data-work-view="compliance">Compliance</button><button type="button" data-work-view="audit">Audit trail</button></div><div class="work-toolbar-actions"><label class="work-inline-search"><span>⌕</span><input id="workSearch" type="search" placeholder="Search invoice, GSTIN, party…" /></label><select id="workFinancialYear" aria-label="Financial year"><option>FY 2026–27</option><option>FY 2025–26</option><option>FY 2024–25</option></select></div></div>
+            <div class="work-content" id="workContent" aria-live="polite"></div>
+            <div class="work-transaction-detail" id="workTransactionDetail" hidden></div>
+          </section>
+
+            <nav class="module-navigation" id="moduleNavigation" aria-label="Continue your learning" hidden><a id="previousModule" href="#overview"><span class="module-nav-arrow">←</span><span><small>PREVIOUS STEP</small><strong id="previousModuleLabel">Start here</strong></span></a><div class="module-nav-center"><span id="modulePosition">1 / 7</span><small>Take it at your own pace</small></div><a id="nextModule" href="#journal"><span><small>NEXT STEP</small><strong id="nextModuleLabel">Journal entries</strong></span><span class="module-nav-arrow">→</span></a></nav>
+
+        <footer class="site-footer"><div class="footer-brand"><div class="brand-mark small" aria-hidden="true"><span></span><span></span><span></span></div><strong>ledgerly</strong></div><span>Built for clearer books and calmer mornings.</span><span>Made with care · 2026</span></footer>
+      </div>
+    </main>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <dialog class="work-dialog" id="workTransactionDialog"><form id="workTransactionForm"><div class="work-dialog-head"><div><span class="section-kicker">NEW WORK TRANSACTION</span><h2>Enter it once. Let Ledgerly connect it.</h2></div><button type="button" class="dialog-close" id="workTransactionClose" aria-label="Close transaction form">×</button></div><p class="work-dialog-intro">The saved transaction creates the accounting entry, GST split, ledger impact and return/reconciliation trace in this company.</p><div class="work-form-grid"><label><span class="field-label">Transaction type</span><select id="workTransactionType"><option value="sale">Sales invoice</option><option value="purchase">Purchase invoice</option><option value="credit_note">Credit note</option><option value="debit_note">Debit note</option><option value="expense">Expense bill</option></select></label><label><span class="field-label">Document number</span><input id="workDocumentNumber" required value="INV-2026-015" /></label><label><span class="field-label">Date</span><input id="workTransactionDate" type="date" required /></label><label><span class="field-label">Party</span><select id="workParty" required></select></label><label><span class="field-label">Place of supply</span><select id="workPlaceOfSupply" required></select></label><label><span class="field-label">Return category</span><select id="workCategory"><option value="B2B">B2B</option><option value="B2C">B2C</option><option value="Export">Export / zero-rated</option><option value="SEZ">SEZ</option><option value="Expense">Expense</option></select></label><label class="work-form-wide"><span class="field-label">Product / service</span><select id="workProduct"></select></label><label><span class="field-label">Quantity</span><input id="workQuantity" type="number" min="0.01" step="0.01" value="1" /></label><label><span class="field-label">Rate (₹)</span><input id="workRate" type="number" min="0" step="0.01" value="650" /></label><label><span class="field-label">Discount (₹)</span><input id="workDiscount" type="number" min="0" step="0.01" value="0" /></label><label><span class="field-label">GST rate (%)</span><select id="workGstRate"></select></label><label><span class="field-label">GSTR-2B status</span><select id="workReconStatus"><option value="not-applicable">Not applicable</option><option value="matched">Exact match</option><option value="partial">Partial match</option><option value="missing">Missing in 2B</option><option value="extra">Exists in 2B, not books</option></select></label><label class="work-check-field"><input id="workRcm" type="checkbox" /><span><b>Reverse charge applies</b><small>Review liability and ITC eligibility separately.</small></span></label><label class="work-check-field"><input id="workItcEligible" type="checkbox" checked /><span><b>ITC potentially eligible</b><small>Final eligibility needs evidence and current rules.</small></span></label></div><div class="work-form-preview" id="workFormPreview"></div><p class="work-form-error" id="workFormError" role="alert"></p><div class="work-dialog-actions"><button type="button" class="outline-button" id="workTransactionCancel">Cancel</button><button class="button button-primary" type="submit">Save &amp; connect transaction <span>→</span></button></div></form></dialog>
+   <dialog class="work-dialog" id="workCompanyDialog"><form id="workCompanyForm"><div class="work-dialog-head"><div><span class="section-kicker">COMPANY SETUP</span><h2>Add a business workspace.</h2></div><button type="button" class="dialog-close" id="workCompanyClose" aria-label="Close company form">×</button></div><div class="work-form-grid"><label><span class="field-label">Business name</span><input id="workCompanyInputName" required placeholder="Example Trading Private Limited" /></label><label><span class="field-label">Trade name</span><input id="workCompanyInputTrade" placeholder="Example Trading" /></label><label><span class="field-label">State / Union Territory</span><select id="workCompanyInputState"><option value="Andaman and Nicobar Islands" data-code="35">Andaman and Nicobar Islands · 35</option><option value="Andhra Pradesh" data-code="37">Andhra Pradesh · 37</option><option value="Arunachal Pradesh" data-code="12">Arunachal Pradesh · 12</option><option value="Assam" data-code="18">Assam · 18</option><option value="Bihar" data-code="10">Bihar · 10</option><option value="Chandigarh" data-code="04">Chandigarh · 04</option><option value="Chhattisgarh" data-code="22">Chhattisgarh · 22</option><option value="Dadra and Nagar Haveli and Daman and Diu" data-code="26">Dadra and Nagar Haveli and Daman and Diu · 26</option><option value="Delhi" data-code="07">Delhi · 07</option><option value="Goa" data-code="30">Goa · 30</option><option value="Gujarat" data-code="24">Gujarat · 24</option><option value="Haryana" data-code="06">Haryana · 06</option><option value="Himachal Pradesh" data-code="02">Himachal Pradesh · 02</option><option value="Jammu and Kashmir" data-code="01">Jammu and Kashmir · 01</option><option value="Jharkhand" data-code="20">Jharkhand · 20</option><option value="Karnataka" data-code="29">Karnataka · 29</option><option value="Kerala" data-code="32">Kerala · 32</option><option value="Ladakh" data-code="38">Ladakh · 38</option><option value="Lakshadweep" data-code="31">Lakshadweep · 31</option><option value="Madhya Pradesh" data-code="23">Madhya Pradesh · 23</option><option value="Maharashtra" data-code="27" selected>Maharashtra · 27</option><option value="Manipur" data-code="14">Manipur · 14</option><option value="Meghalaya" data-code="17">Meghalaya · 17</option><option value="Mizoram" data-code="15">Mizoram · 15</option><option value="Nagaland" data-code="13">Nagaland · 13</option><option value="Odisha" data-code="21">Odisha · 21</option><option value="Puducherry" data-code="34">Puducherry · 34</option><option value="Punjab" data-code="03">Punjab · 03</option><option value="Rajasthan" data-code="08">Rajasthan · 08</option><option value="Sikkim" data-code="11">Sikkim · 11</option><option value="Tamil Nadu" data-code="33">Tamil Nadu · 33</option><option value="Telangana" data-code="36">Telangana · 36</option><option value="Tripura" data-code="16">Tripura · 16</option><option value="Uttar Pradesh" data-code="09">Uttar Pradesh · 09</option><option value="Uttarakhand" data-code="05">Uttarakhand · 05</option><option value="West Bengal" data-code="19">West Bengal · 19</option></select></label><label><span class="field-label">PAN</span><input id="workCompanyInputPan" placeholder="AABCE1234F" /></label><label><span class="field-label">GSTIN if registered</span><input id="workCompanyInputGstin" placeholder="27AABCE1234F1Z5" /></label><label><span class="field-label">Business type</span><select id="workCompanyInputType"><option>Proprietorship</option><option>Partnership / LLP</option><option>Private limited company</option><option>Private limited company</option><option>Other</option></select></label></div><p class="work-form-error" id="workCompanyError" role="alert"></p><div class="work-dialog-actions"><button type="button" class="outline-button" id="workCompanyCancel">Cancel</button><button class="button button-primary" type="submit">Create company <span>✓</span></button></div></form></dialog>
+  <script src="theme-controller.js?v=1"></script>
+  <script src="script.js?v=themes-3"></script>
+  <script src="practice.js"></script>
+  <script src="tally-model.js"></script>
+  <script src="tally-lab.js"></script>
+  <script src="statement-lab.js?v=1"></script>
+  <script src="gst-model.js?v=1"></script>
+  <script src="work-model.js?v=3"></script>
+  <script src="document-coach.js?v=scan-pdf-3"></script>
+  <script src="gst-learning.js?v=1"></script>
+  <script src="workspace.js?v=3"></script>
+  <script src="gst-tools.js?v=1"></script>
+  <script src="work.js?v=3"></script>
+</body>
+</html>

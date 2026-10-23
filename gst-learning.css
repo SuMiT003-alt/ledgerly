@@ -1,0 +1,58 @@
+/* GST learning decision desk. */
+.gst-learning { margin-top: 58px; padding-top: 42px; border-top: 1px solid var(--line); scroll-margin-top: calc(var(--workspace-header-height) + 18px); }
+.gst-learning-heading { display: flex; align-items: end; justify-content: space-between; gap: 25px; margin-bottom: 22px; }
+.gst-learning-heading h3 { margin: 9px 0 0; font-family: var(--display); font-size: 29px; letter-spacing: -1px; line-height: 1.1; }
+.gst-learning-heading h3 em { color: var(--teal); font-style: normal; }
+.gst-learning-heading > p { max-width: 330px; margin: 0 0 3px; color: var(--secondary-text); font-size: 11px; line-height: 1.7; }
+.gst-learning-grid { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 14px; align-items: stretch; }
+.gst-scenario-card, .gst-learning-entry { padding: 22px; border: 1px solid var(--line); border-radius: 9px; }
+.gst-scenario-card { background: var(--surface-muted); }
+.gst-learning-entry { background: var(--white); box-shadow: var(--shadow-small); }
+.gst-card-kicker { display: flex; align-items: center; gap: 9px; color: var(--secondary-text); font-family: var(--mono); font-size: 9px; letter-spacing: .5px; text-transform: uppercase; }
+.gst-card-kicker > span:first-child { color: var(--teal); }
+.gst-card-kicker strong { color: var(--ink-soft); font-weight: 500; }
+.gst-learning-tax-pill { margin-left: auto; padding: 5px 7px; color: var(--teal-dark); background: var(--teal-light); border-radius: 4px; font-size: 8px; letter-spacing: .2px; }
+.gst-learning-tax-pill.inter { color: var(--orange-ink); background: var(--orange-light); }
+.gst-learning-tax-pill.none, .gst-learning-tax-pill.unknown { color: var(--yellow-ink); background: var(--yellow-light); }
+.gst-scenario-tabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; margin-top: 17px; }
+.gst-scenario-tabs button { min-height: 52px; padding: 8px 5px; color: var(--secondary-text); background: var(--white); border: 1px solid var(--line); border-radius: 5px; font-size: 10px; text-align: left; }
+.gst-scenario-tabs button:hover { border-color: var(--teal); }
+.gst-scenario-tabs button[aria-selected="true"] { color: var(--teal-dark); background: var(--teal-light); border-color: var(--teal); }
+.gst-scenario-tabs small { display: block; margin-top: 5px; color: var(--subtle-text); font-family: var(--mono); font-size: 8px; }
+.gst-learning-inputs { display: grid; grid-template-columns: 1.25fr .9fr .7fr; gap: 9px; margin-top: 19px; }
+.gst-learning-inputs label { min-width: 0; }
+.gst-learning-inputs select, .gst-learning-inputs input { width: 100%; height: 38px; margin-top: 7px; padding: 0 8px; color: var(--ink-soft); background: var(--white); border: 1px solid var(--line); border-radius: 5px; outline-color: var(--teal); font-size: 10px; }
+.gst-learning-callout { margin-top: 17px; padding: 13px; color: var(--teal-dark); background: var(--teal-light); border-radius: 6px; }
+.gst-learning-callout strong { display: block; font-family: var(--display); font-size: 13px; }
+.gst-learning-callout p { margin: 5px 0 0; color: var(--secondary-text); font-size: 10px; line-height: 1.6; }
+.gst-learning-lines { display: grid; gap: 2px; margin-top: 20px; }
+.gst-learning-line { display: grid; grid-template-columns: minmax(0, 1fr) 24px auto; align-items: center; gap: 8px; padding: 10px 8px; color: var(--secondary-text); border-bottom: 1px solid var(--line); font-size: 11px; }
+.gst-learning-line b { font-family: var(--mono); font-size: 9px; font-weight: 500; }
+.gst-debit { color: var(--teal-dark); }
+.gst-credit { color: var(--orange-ink); }
+.gst-learning-line strong { color: var(--ink-soft); font-family: var(--mono); font-size: 10px; font-weight: 500; white-space: nowrap; }
+.gst-learning-total { display: flex; align-items: center; justify-content: space-between; gap: 15px; margin-top: 16px; padding: 13px 8px; color: var(--teal-dark); font-family: var(--display); font-size: 14px; }
+.gst-learning-total strong { font-size: 20px; }
+.gst-learning-why { display: flex; align-items: baseline; gap: 9px; margin-top: 6px; padding: 13px; background: var(--yellow-light); border-radius: 6px; }
+.gst-learning-why > span { color: var(--yellow-ink); font-family: var(--mono); font-size: 8px; }
+.gst-learning-why p { margin: 0; color: var(--yellow-ink); font-size: 10px; line-height: 1.6; }
+.gst-rule-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 12px; }
+.gst-rule-cards > div { padding: 15px; background: var(--white); border: 1px solid var(--line); border-radius: 7px; }
+.gst-rule-symbol { display: block; color: var(--teal); font-family: var(--display); font-size: 20px; }
+.gst-rule-cards strong { display: block; margin-top: 10px; color: var(--ink-soft); font-family: var(--display); font-size: 13px; }
+.gst-rule-cards p { margin: 5px 0 0; color: var(--secondary-text); font-size: 10px; line-height: 1.6; }
+.gst-rule-cards b { color: var(--teal-dark); font-weight: 600; }
+
+@media (max-width: 1000px) {
+  .gst-learning-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 720px) {
+  .gst-learning { margin-top: 42px; padding-top: 33px; }
+  .gst-learning-heading { align-items: flex-start; flex-direction: column; gap: 13px; }
+  .gst-learning-heading h3 { font-size: 26px; }
+  .gst-learning-heading > p { max-width: none; }
+  .gst-scenario-card, .gst-learning-entry { padding: 17px; }
+  .gst-scenario-tabs { grid-template-columns: 1fr; }
+  .gst-learning-inputs { grid-template-columns: 1fr; }
+  .gst-rule-cards { grid-template-columns: 1fr; }
+}

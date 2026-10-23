@@ -1,0 +1,20 @@
+# Python runtime artifacts
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Local databases and runtime logs
+*.sqlite3
+*.db
+*.log
+
+# Local environment and tooling files
+.env
+.env.*
+!.env.example
+.venv/
+venv/
+
+# Operating-system files
+.DS_Store
+Thumbs.db

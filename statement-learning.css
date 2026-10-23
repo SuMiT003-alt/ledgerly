@@ -1,0 +1,25 @@
+/* Trial balance and Profit & Loss learning views. */
+.statement-learning-section { padding-bottom: 12px; }
+.statement-case-header { margin-bottom: 0; }
+.statement-case-header h3 { margin: 8px 0 0; color: var(--ink); font-family: var(--display); font-size: 25px; letter-spacing: -.8px; }
+.trial-equation-bar, .pnl-equation-bar { align-items: stretch; }
+.trial-equation-bar > div, .pnl-equation-bar > div { display: flex; flex-direction: column; justify-content: center; }
+.trial-balance-table-wrap { overflow-x: auto; margin-top: 20px; }
+.trial-balance-table { width: 100%; border-collapse: collapse; min-width: 430px; }
+.trial-balance-table th, .trial-balance-table td { padding: 11px 8px; border-bottom: 1px solid var(--line); color: var(--secondary-text); font-size: 11px; text-align: left; }
+.trial-balance-table th { color: var(--subtle-text); background: var(--surface-subtle); font-family: var(--mono); font-size: 8px; font-weight: 500; letter-spacing: .6px; text-transform: uppercase; }
+.trial-balance-table th:not(:first-child), .trial-balance-table td:not(:first-child) { text-align: right; font-family: var(--mono); white-space: nowrap; }
+.trial-balance-table tbody tr { cursor: pointer; transition: background .2s ease, color .2s ease; }
+.trial-balance-table tbody tr:hover, .trial-balance-table tbody tr:focus, .trial-balance-table tbody tr.selected { outline: none; color: var(--teal-dark); background: var(--surface-hover); }
+.trial-balance-table tbody tr:focus { box-shadow: inset 3px 0 0 var(--teal); }
+.trial-balance-table tfoot th { color: var(--teal-dark); background: var(--teal-light); border-bottom: 0; }
+.statement-coach-column { justify-content: flex-start; }
+.statement-coach-column h4 { margin: 9px 0 8px; color: var(--ink); font-family: var(--display); font-size: 22px; letter-spacing: -.6px; }
+.statement-coach-column > p { margin: 0; color: var(--secondary-text); font-size: 12px; line-height: 1.75; }
+.statement-formula { display: grid; gap: 8px; margin-top: 25px; padding: 15px; color: var(--secondary-text); background: var(--surface-muted); border-radius: 7px; font-size: 10px; }
+.statement-formula span { color: var(--subtle-text); font-family: var(--mono); font-size: 8px; letter-spacing: .5px; text-transform: uppercase; }.statement-formula b { color: var(--teal-dark); font-family: var(--display); font-size: 13px; }
+.statement-quiz { margin-top: auto; padding-top: 24px; }.statement-quiz > strong { display: block; margin: 7px 0 12px; color: var(--ink-soft); font-family: var(--display); font-size: 15px; }.statement-quiz > div { display: flex; flex-wrap: wrap; gap: 7px; }.statement-quiz button { padding: 9px 11px; color: var(--secondary-text); background: var(--surface-subtle); border: 1px solid var(--line); border-radius: 5px; font-size: 10px; transition: border-color .2s, background .2s, color .2s, transform .2s; }.statement-quiz button:hover { color: var(--teal-dark); background: var(--surface-hover); border-color: var(--teal); transform: translateY(-1px); }.statement-quiz button.correct { color: var(--success); background: var(--success-bg); border-color: var(--success-line); }.statement-quiz button.incorrect { color: var(--error); background: var(--error-bg); border-color: var(--error-line); }.statement-quiz > p { min-height: 35px; margin: 11px 0 0; color: var(--secondary-text); font-size: 10px; line-height: 1.6; }
+.pnl-equation-bar > div { min-width: 130px; }.pnl-equation-bar strong { font-size: 21px; }.pnl-statement-grid .statement-account { cursor: default; }.pnl-statement-grid .statement-account:hover { color: var(--secondary-text); background: transparent; }.pnl-statement-grid .statement-account strong { color: var(--ink-soft); }.statement-coach-wide { grid-column: 1 / -1; }.statement-coach-wide h4 { margin: 9px 0 0; }.statement-coach-wide > p { max-width: 740px; margin: 9px 0 0; }.pnl-quiz { margin-top: 20px; }.statement-detail { margin-top: 17px; }
+@media (max-width: 1150px) { .pnl-equation-bar > div { min-width: 105px; } }
+@media (max-width: 720px) { .statement-case-header { align-items: flex-start; }.trial-equation-bar > div, .pnl-equation-bar > div { flex: 1 1 100%; }.pnl-equation-bar > b { display: none; }.statement-coach-wide { grid-column: auto; }.statement-quiz > div { flex-direction: column; align-items: stretch; }.statement-quiz button { text-align: left; } }
+@media print { .trial-balance-section, .profit-loss-section { display: none !important; } }

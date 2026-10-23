@@ -1,0 +1,181 @@
+/* Focused learning screens: one primary navigation, always at the top. */
+:root { --workspace-header-height: 158px; }
+.app-shell { display: block; }
+.main-content { width: 100%; }
+.workspace-header { position: sticky; top: 0; z-index: 40; background: var(--paper); border-bottom: 1px solid var(--line); box-shadow: 0 4px 20px rgba(0, 0, 0, .025); }
+.workspace-header .topbar { position: relative; height: 76px; max-width: 1300px; margin: 0 auto; padding: 0 36px; border-bottom: 0; gap: 25px; }
+.topbar .brand-lockup { flex: none; padding: 0; gap: 10px; }
+.topbar .brand-name { font-size: 24px; }
+.topbar .brand-tagline { margin-top: 6px; font-size: 7px; letter-spacing: .6px; }
+.topbar .brand-mark { width: 29px; height: 29px; }
+.topbar .breadcrumb { flex: 1; font-size: 11px; }
+.topbar-actions { gap: 15px; }
+.topbar .search-box { width: 215px; }
+.desk-tools { position: relative; }
+.desk-tools > summary { display: flex; align-items: center; gap: 10px; padding: 0 11px; height: 36px; color: var(--ink-soft); background: var(--white); border: 1px solid var(--line); border-radius: 7px; cursor: pointer; font-size: 11px; font-weight: 600; list-style: none; }
+.desk-tools > summary::-webkit-details-marker { display: none; }
+.desk-tools > summary:hover, .desk-tools[open] > summary { border-color: var(--teal); }
+.desk-tools-menu { position: absolute; top: 44px; right: 0; z-index: 70; display: grid; gap: 5px; padding: 9px; min-width: 220px; color: var(--ink-soft); background: var(--white); border: 1px solid var(--line); border-radius: 9px; box-shadow: var(--shadow); }
+.desk-tools-menu button, .desk-tools-menu a { display: flex; align-items: center; gap: 10px; padding: 12px 10px; color: var(--ink-soft); background: transparent; border-radius: 5px; text-align: left; font-size: 12px; }
+.desk-tools-menu button:hover, .desk-tools-menu a:hover { background: var(--teal-light); }
+.desk-tools-menu span { color: var(--teal); font-size: 16px; }
+.learning-tabs { border-top: 1px solid var(--line); }
+.learning-tabs-inner { position: relative; display: flex; gap: 6px; max-width: 1300px; margin: 0 auto; padding: 12px 36px; overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
+.learning-tab { position: relative; display: grid; grid-template-columns: 24px 1fr; align-items: center; align-content: center; flex: 1; min-width: 143px; gap: 5px 7px; padding: 12px 11px; border: 1px solid transparent; border-radius: 8px; color: var(--secondary-text); background: transparent; transition: background .2s, border-color .2s, color .2s; }
+.learning-tab:hover { color: var(--teal-dark); background: var(--surface-hover); }
+.learning-tab.active { color: var(--teal-dark); background: var(--white); border-color: var(--line); box-shadow: var(--shadow-small); }
+.learning-tab.active::after { content: ''; position: absolute; bottom: -1px; left: 25%; right: 25%; height: 3px; background: var(--teal); border-radius: 3px 3px 0 0; }
+.tab-step { display: grid; place-items: center; grid-row: 1 / 3; width: 23px; height: 27px; color: var(--subtle-text); font-family: var(--mono); font-size: 10px; background: var(--surface-muted); border-radius: 5px; }
+.learning-tab.active .tab-step, .learning-tab.complete .tab-step { color: var(--teal-dark); background: var(--teal-light); }
+.tab-label { white-space: nowrap; font-size: 12px; font-weight: 700; letter-spacing: -.2px; }
+.learning-tab small { grid-column: 2; color: var(--subtle-text); font-size: 9px; white-space: nowrap; }
+.tab-track-hint { display: none; }
+.page-wrap { max-width: 1240px; width: 100%; padding: 0 36px 24px; }
+.learning-screen { min-height: 55vh; animation: screen-arrive .22s ease-out; }
+@keyframes screen-arrive { from { opacity: .55; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+.learning-screen > .content-section { padding-top: 15px; scroll-margin-top: calc(var(--workspace-header-height) + 18px); }
+.learning-screen > .reference-section { padding-top: 48px; }
+.module-orientation { display: flex; align-items: center; justify-content: space-between; gap: 25px; margin: 32px 0 20px; padding-bottom: 19px; border-bottom: 1px solid var(--line); }
+.module-orientation p { margin: 8px 0 0; color: var(--secondary-text); font-size: 12px; line-height: 1.7; }
+.module-orientation .section-kicker { color: var(--teal); }
+.back-to-roadmap { flex: none; padding: 9px 11px; color: var(--teal-dark); background: var(--surface-muted); border: 1px solid var(--line); border-radius: 6px; font-size: 11px; font-weight: 600; }
+.back-to-roadmap span { margin-left: 5px; }
+.page-wrap .hero-section { min-height: 390px; padding: 47px 0 35px; gap: 65px; }
+.hero-copy h1 { font-size: clamp(42px, 4.5vw, 62px); line-height: 1.02; letter-spacing: -3px; }
+.hero-subtitle { font-size: 15px; }
+.hero-footnote { margin-top: 28px; }
+.hero-visual { min-height: 300px; }
+.learning-screen .orbit-one { width: min(85%, 380px); height: 230px; }
+.hero-actions { margin-top: 25px; }
+.route-map { padding: 44px 0 5px; scroll-margin-top: calc(var(--workspace-header-height) + 18px); }
+.route-map-heading { display: flex; align-items: center; justify-content: space-between; gap: 25px; margin-bottom: 24px; }
+.route-map-heading h2 { margin: 10px 0 0; font-family: var(--display); font-size: 32px; line-height: 1.13; letter-spacing: -1.3px; }
+.route-map-heading h2 em { color: var(--teal); font-style: normal; }
+.route-progress { display: grid; gap: 6px; text-align: right; }
+.route-progress strong { color: var(--teal-dark); font-family: var(--display); font-size: 27px; letter-spacing: -1px; }
+.route-progress span { color: var(--subtle-text); font-size: 11px; }
+.route-steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.route-card { display: grid; grid-template-columns: 1fr auto; align-items: start; gap: 10px; padding: 22px; color: var(--ink-soft); background: var(--white); border: 1px solid var(--line); border-radius: 10px; box-shadow: var(--shadow-small); transition: border-color .2s, transform .2s, box-shadow .2s; }
+.route-card:hover { border-color: var(--teal); transform: translateY(-3px); box-shadow: var(--shadow); }
+.route-number { color: var(--subtle-text); font-family: var(--mono); font-size: 10px; }
+.route-icon { display: grid; place-items: center; grid-column: 2; grid-row: 1 / 4; width: 42px; height: 42px; color: var(--teal); background: var(--teal-light); border-radius: 9px; font-family: var(--display); font-size: 21px; }
+.route-card strong { grid-column: 1; margin-top: 3px; font-family: var(--display); font-size: 20px; letter-spacing: -.6px; }
+.route-card small { grid-column: 1 / 3; color: var(--secondary-text); font-size: 12px; line-height: 1.5; }
+.route-card i { grid-column: 2; color: var(--teal); text-align: right; font-style: normal; font-size: 19px; }
+.route-card-status { grid-column: 1; padding-top: 5px; color: var(--subtle-text); font-family: var(--mono); font-size: 9px; }
+.route-card.current { border-color: var(--teal); background: var(--teal-light); }
+.route-card.current .route-icon { background: var(--white); }
+.route-card.current .route-card-status, .route-card.complete .route-card-status { color: var(--teal-dark); }
+.route-card.complete { border-color: var(--success-line); }
+.route-note { display: flex; gap: 9px; align-items: baseline; margin: 22px 0 0; color: var(--secondary-text); font-size: 12px; line-height: 1.7; }
+.route-note > span { color: var(--orange); }
+.route-map .progress-card { margin: 25px 0 0; padding: 21px; }
+.progress-card-top { font-size: 11px; }
+.progress-details { font-size: 11px; }
+.progress-details ul { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 5px 25px; }
+.progress-details a:hover { color: var(--teal); text-decoration: underline; }
+.module-navigation { display: flex; align-items: center; justify-content: space-between; gap: 25px; margin-top: 40px; padding: 22px 0; border-top: 1px solid var(--line); }
+.module-navigation > a { display: flex; align-items: center; gap: 12px; padding: 12px 15px; color: var(--ink-soft); border: 1px solid var(--line); border-radius: 8px; background: var(--white); transition: border-color .2s, transform .2s; }
+.module-navigation > a:hover { border-color: var(--teal); transform: translateY(-2px); }
+.module-navigation > a small { display: block; color: var(--subtle-text); font-family: var(--mono); font-size: 8px; letter-spacing: .6px; }
+.module-navigation > a strong { display: block; margin-top: 5px; font-size: 13px; font-weight: 600; }
+.module-nav-arrow { color: var(--teal); font-size: 21px; }
+.module-nav-center { display: grid; gap: 5px; text-align: center; }
+.module-nav-center > span { color: var(--teal-dark); font-family: var(--mono); font-size: 12px; }
+.module-nav-center > small { color: var(--subtle-text); font-size: 10px; }
+.site-footer { margin-top: 40px; }
+.session-panel, .session-results, .tally-panel, .balance-build-panel, .balance-learn-panel { scroll-margin-top: calc(var(--workspace-header-height) + 18px); }
+.focus-mode .topbar { justify-content: space-between; }
+.focus-mode .desk-tools, .focus-mode .breadcrumb, .focus-mode .streak { display: none; }
+.focus-mode .page-wrap { width: min(1060px, 100%); }
+.mobile-search-toggle { display: none; }
+.toast { max-width: calc(100vw - 36px); line-height: 1.6; }
+.learning-screen h1:focus, .learning-screen h2:focus { outline: none; }
+
+@media (max-width: 1100px) {
+  .workspace-header .topbar { gap: 20px; padding: 0 25px; }
+  .breadcrumb { display: none; }
+  .workspace-header .topbar { justify-content: space-between; }
+  .learning-tabs-inner { padding: 10px 25px; }
+  .learning-tab { min-width: 147px; }
+  .page-wrap { padding-left: 25px; padding-right: 25px; }
+  .page-wrap .hero-section { grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); gap: 25px; }
+  .hero-copy { text-align: left; }
+  .eyebrow, .hero-actions, .hero-footnote { justify-content: flex-start; }
+  .hero-subtitle { margin-left: 0; }
+  .hero-copy h1 { font-size: 52px; }
+}
+@media (max-width: 720px) {
+  .workspace-header .topbar { height: 68px; padding: 0 18px; gap: 10px; }
+  .topbar .brand-name { font-size: 21px; }
+  .topbar .brand-tagline { font-size: 6px; }
+  .topbar .brand-mark { width: 23px; height: 26px; }
+  .topbar-actions { gap: 8px; }
+  .topbar .search-box { display: none; }
+  .mobile-search-toggle { display: grid; place-items: center; height: 34px; width: 32px; padding: 0; background: transparent; color: var(--teal); font-size: 25px; }
+  .topbar.search-open { height: 124px; padding-bottom: 56px; }
+  .topbar.search-open .search-box { display: flex; position: absolute; top: 69px; left: 18px; right: 18px; width: auto; height: 40px; }
+  .topbar.search-open .search-box input { font-size: 13px; }
+  .theme-toggle { padding: 0 8px; gap: 4px; font-size: 10px; }
+  .theme-toggle-icon { font-size: 16px; }
+  .desk-tools > summary { padding: 0 9px; gap: 6px; font-size: 10px; }
+  .learning-tabs-inner { padding: 8px 18px 4px; gap: 5px; }
+  .learning-tab { flex: none; min-width: 128px; padding: 10px 8px; }
+  .tab-label { font-size: 11px; }
+  .learning-tab small { font-size: 8px; }
+  .tab-track-hint { display: block; margin: 2px 18px 6px; color: var(--subtle-text); font-family: var(--mono); font-size: 7px; letter-spacing: .3px; }
+  .tab-track-hint span { margin-left: 5px; }
+  .page-wrap { padding: 0 18px 20px; }
+  .page-wrap .hero-section { grid-template-columns: 1fr; padding-top: 35px; gap: 15px; }
+  .hero-copy { text-align: left; }
+  .hero-copy h1 { font-size: 49px; }
+  .hero-subtitle { font-size: 14px; }
+  .hero-actions { align-items: flex-start; gap: 17px; }
+  .hero-visual { min-height: 270px; max-width: 410px; width: 100%; margin: 10px auto 0; }
+  .learning-screen .orbit-one { width: 85%; height: 180px; }
+  .hero-footnote { font-size: 9px; }
+  .module-orientation { align-items: flex-start; flex-direction: column; gap: 12px; margin: 25px 0 16px; }
+  .module-orientation p { font-size: 11px; }
+  .back-to-roadmap { padding: 7px 9px; font-size: 10px; }
+  .route-map { padding-top: 33px; }
+  .route-map-heading { align-items: flex-start; flex-direction: column; gap: 16px; }
+  .route-map-heading h2 { font-size: 28px; }
+  .route-progress { display: flex; align-items: center; gap: 12px; text-align: left; }
+  .route-progress strong { font-size: 23px; }
+  .route-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .route-card { padding: 15px; gap: 8px; }
+  .route-icon { width: 30px; height: 30px; font-size: 17px; }
+  .route-card strong { grid-column: 1 / 3; margin-top: 0; font-size: 16px; }
+  .route-card small { font-size: 10px; min-height: 31px; }
+  .route-icon { grid-row: 1; }
+  .route-card-status { font-size: 8px; line-height: 1.4; }
+  .route-note { font-size: 11px; }
+  .progress-details ul { grid-template-columns: 1fr; }
+  .module-nav-center { display: none; }
+  .module-navigation { gap: 10px; padding: 17px 0; margin-top: 28px; }
+  .module-navigation > a { flex: 1; gap: 8px; padding: 12px 10px; }
+  .module-navigation > a:last-child { justify-content: flex-end; text-align: right; }
+  .module-navigation > a strong { font-size: 11px; }
+  .module-navigation > a small { font-size: 7px; }
+  .module-nav-arrow { font-size: 17px; }
+  .learning-screen > .reference-section { padding-top: 37px; }
+  .focus-mode .topbar { justify-content: space-between; }
+  .focus-mode .focus-exit { padding: 6px 8px; font-size: 9px; }
+}
+@media (max-width: 360px) {
+  .topbar .brand-tagline { display: none; }
+  .topbar .brand-name { font-size: 20px; }
+  .topbar .brand-lockup { gap: 6px; }
+  .topbar-actions { gap: 5px; }
+  .mobile-search-toggle { width: 25px; }
+  .theme-toggle { min-width: 34px; }
+  #themeLabel { display: none; }
+  .hero-copy h1 { font-size: 43px; }
+}
+@media (prefers-reduced-motion: reduce) { .learning-screen { animation: none; } }
+@media print {
+  .workspace-header, .module-orientation, .module-navigation, .route-map { display: none !important; }
+  .learning-screen { display: none !important; }
+  #screen-rules, #screen-journal, #screen-ledgers { display: block !important; }
+  .learning-screen > .content-section { padding-top: 25px; }
+}
