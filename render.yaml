@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: ledgerly
+    runtime: python
+    plan: free
+    branch: main
+    buildCommand: python3 -m py_compile server.py
+    startCommand: python3 server.py --bind 0.0.0.0 --port $PORT
+    healthCheckPath: /Ledgerly/
+    autoDeployTrigger: commit
