@@ -480,7 +480,7 @@ class LedgerlyHandler(SimpleHTTPRequestHandler):
         # Serve the application, keeping its SQLite and source files out of the static file routes.
         allowed = {ROOT / name for name in (
              "index.html", "favicon.svg", "styles.css", "script.js", "practice.js", "theme-controller.js", "theme-presets.css", "statement-lab.js", "statement-learning.css",
-             "tally-model.js", "tally-lab.js", "tally-lab.css", "gst-model.js", "document-coach.js", "document-coach.css", "gst-learning.js", "gst-learning.css", "gst-tools.js", "gst-suite.css", "work-model.js", "work.js", "work-suite.css", "workspace.js", "studio-theme.css", "learning-layout.css", "seo-pages.css", "gst-calculator.html", "journal-entry-practice.html", "tally-practice.html", "robots.txt", "sitemap.xml",
+             "tally-model.js", "tally-lab.js", "tally-lab.css", "gst-model.js", "document-coach.js", "document-coach.css", "gst-learning.js", "gst-learning.css", "gst-tools.js", "gst-suite.css", "work-model.js", "work.js", "work-suite.css", "workspace.js", "studio-theme.css", "learning-layout.css", "seo-pages.css", "gst-calculator.html", "journal-entry-practice.html", "tally-practice.html", "robots.txt", "sitemap.xml", "googlebd6f78401c717d1a.html",
         )}
         return str(candidate) if candidate in allowed else str(ROOT / "not-found")
 
